@@ -1,38 +1,36 @@
 package GUI;
-
-import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
-/**
- * Demonstrates a drag-and-drop feature.
- */
-public class HelloDragAndDrop extends Application {
+import java.util.ArrayList;
 
-    @Override public void start(Stage stage) {
-        stage.setTitle("Hello Drag And Drop");
+public class GUIController {
 
-        Group root = new Group();
-        Scene scene = new Scene(root, 400, 200);
-        scene.setFill(Color.LIGHTGREEN);
+    @FXML
+    private FlowPane Blockpane;
+    @FXML
+    private VBox Architecture;
 
-        final Label source = new Label("DRAG ME");
-        source.setTranslateX(50);
-        source.setTranslateY(100);
-        source.setScaleX(2.0);
-        source.setScaleY(2.0);
+    ArrayList<Label> SourceList = new ArrayList<Label>();
 
-        final Label target = new Label("DROP HERE");
-        source.setTranslateX(250);
-        source.setTranslateY(100);
-        target.setScaleX(2.0);
-        target.setScaleY(2.0);
+    Integer counter = 0;
+
+    @FXML
+    protected void initialize() {
+        System.out.println("init Flow Pane");
+        Label source = new Label("DRAG ME");
+        source.setTextFill(Color.WHITE);
+        Label target = targetLabelCreation(0);
+        target.setPrefWidth(535);
+        target.setPrefWidth(438);
 
         source.setOnDragDetected(new EventHandler <MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -51,6 +49,64 @@ public class HelloDragAndDrop extends Application {
             }
         });
 
+        source.setOnDragDone(new EventHandler <DragEvent>() {
+            public void handle(DragEvent event) {
+                /* the drag-and-drop gesture ended */
+                System.out.println("onDragDone");
+                /* if the data was successfully moved, clear it */
+                /*if (event.getTransferMode() == TransferMode.MOVE) {
+                    source.setText("");
+                }*/
+
+                event.consume();
+            }
+        });
+
+        Blockpane.setAlignment(Pos.TOP_LEFT);
+        Blockpane.getChildren().addAll(source);
+        Architecture.getChildren().addAll(target);
+    }
+
+    private void refreshLabel(String addString, String position){
+        counter++;
+
+        int counter_2 = 0;
+
+        ArrayList<Label> ResultList = new ArrayList<Label>();
+        Label newOne = new Label(addString+counter);
+        newOne.setTextFill(Color.BLACK);
+
+        for (Label temp : SourceList) {
+            ResultList.add(targetLabelCreation(counter_2));
+            if(counter_2 == Integer.parseInt(position)){
+                ResultList.add(newOne);
+                counter_2++;
+                ResultList.add(targetLabelCreation(counter_2));
+            }
+            ResultList.add(temp);
+            counter_2++;
+        }
+
+        if(counter == 1 || counter_2 == Integer.parseInt(position)) {
+            ResultList.add(targetLabelCreation(counter_2));
+            ResultList.add(newOne);
+            counter_2++;
+        }
+
+        SourceList.add(Integer.parseInt(position), newOne);
+        Label last = targetLabelCreation(counter_2);
+        last.setPrefHeight(535);
+        ResultList.add(last);
+
+        Architecture.getChildren().clear();
+        Architecture.getChildren().addAll(ResultList);
+    }
+
+    private Label targetLabelCreation(Integer number){
+        Label target = new Label(number.toString());
+        target.setPrefWidth(438);
+        target.setMinHeight(10);
+        target.setFont(new Font(0));
         target.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
@@ -75,7 +131,7 @@ public class HelloDragAndDrop extends Application {
                 /* show to the user that it is an actual gesture target */
                 if (event.getGestureSource() != target &&
                         event.getDragboard().hasString()) {
-                    target.setTextFill(Color.GREEN);
+                    target.setStyle("-fx-background-color: black;");
                 }
 
                 event.consume();
@@ -99,37 +155,16 @@ public class HelloDragAndDrop extends Application {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasString()) {
-                    target.setText(db.getString());
+                    //target.setText(db.getString());
+                    refreshLabel(db.getString(),target.getText());
                     success = true;
                 }
                 /* let the source know whether the string was successfully
                  * transferred and used */
                 event.setDropCompleted(success);
-
                 event.consume();
             }
         });
-
-        source.setOnDragDone(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* the drag-and-drop gesture ended */
-                System.out.println("onDragDone");
-                /* if the data was successfully moved, clear it */
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    source.setText("");
-                }
-
-                event.consume();
-            }
-        });
-
-        root.getChildren().add(source);
-        root.getChildren().add(target);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        Application.launch(args);
+        return target;
     }
 }
