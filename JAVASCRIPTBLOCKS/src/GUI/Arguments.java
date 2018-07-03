@@ -1,18 +1,16 @@
 package GUI;
 
-public class Arguments {
+public class Arguments implements Cloneable{
     private int id;
     private String name;
     private String value;
     private String description;
-    private int type;
 
-    public Arguments(int id, String name, String value, String description, int type) {
+    public Arguments(int id, String name, String value, String description) {
         this.id = id;
         this.name = name;
         this.value = value;
         this.description = description;
-        this.type = type;
     }
 
     public int getId() {
@@ -47,11 +45,14 @@ public class Arguments {
         this.description = description;
     }
 
-    public int getType() {
-        return type;
-    }
+    public Object clone() {
+        Arguments args = null;
+        try{
+            args = (Arguments) super.clone();
+        } catch(CloneNotSupportedException cnse) {
+            cnse.printStackTrace(System.err);
+        }
 
-    public void setType(int type) {
-        this.type = type;
+        return args;
     }
 }

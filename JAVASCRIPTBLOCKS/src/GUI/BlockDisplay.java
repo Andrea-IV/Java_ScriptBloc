@@ -3,13 +3,20 @@ package GUI;
 import javafx.scene.control.Label;
 
 public class BlockDisplay {
-    private Label blockLabel;
+    public Label blockLabel;
     private int type;
     private int position;
+    public Block block;
 
     public BlockDisplay(Label label, int type){
         this.blockLabel = label;
         this.type = type;
+    }
+
+    public BlockDisplay(BlockDisplay another){
+        this.blockLabel = another.getBlockLabel();
+        this.type = another.getType();
+        this.block = new Block(another.block);
     }
 
     public Label getBlockLabel() {

@@ -2,6 +2,7 @@ package GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
@@ -9,8 +10,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.json.JSONArray;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class GUIController {
 
@@ -20,13 +22,37 @@ public class GUIController {
     private VBox Architecture;
 
     private ArrayList<BlockDisplay> SourceList = new ArrayList<BlockDisplay>();
-    private int tempType;
+    private BlockDisplay tempBlock;
     private Integer counter = 0;
 
     @FXML
     protected void initialize() {
-        System.out.println("init Flow Pane");
-        BlockDisplay source = new BlockDisplay(new Label("IF"),1);
+        ApiCall api = new ApiCall("http://127.0.0.1:8080/");
+        BlockDisplay source;
+        Blockpane.setAlignment(Pos.TOP_LEFT);
+        try{
+            JSONArray jsonObj = new JSONArray(api.ApiGetResponse("block/full?instruction=0"));
+            for (int i = 0; i < jsonObj.length(); i++) {
+                //System.out.println(jsonObj.getJSONObject(i));
+                System.out.println("----------------------------------------------------------------");
+                source = new BlockDisplay(new Label((String)jsonObj.getJSONObject(i).get("name")),0);
+                source.blockLabel.setStyle("-fx-background-color: slateblue;");
+                source.block = new Block((int)jsonObj.getJSONObject(i).get("id"),(String)jsonObj.getJSONObject(i).get("name"),(String)jsonObj.getJSONObject(i).get("description"),(String)jsonObj.getJSONObject(i).get("type"));
+                JSONArray Obj = (JSONArray)jsonObj.getJSONObject(i).get("Arguments");
+
+                if(Obj.length() != 0){
+                    for(int j = 0; j < Obj.length(); j++){
+                        source.block.args.add(new Arguments((int)Obj.getJSONObject(j).get("id"), (String)Obj.getJSONObject(j).get("name"), (String)Obj.getJSONObject(j).get("value"), (String)Obj.getJSONObject(j).get("description")));
+                    }
+                }
+                blockLabelinit(source);
+                Blockpane.getChildren().add(source.getBlockLabel());
+                Blockpane.setMargin(source.blockLabel, new Insets(10, 10, 0, 10));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        source = new BlockDisplay(new Label("IF"),1);
         BlockDisplay source2 = new BlockDisplay(new Label("Simple"),0);
 
         blockLabelinit(source);
@@ -36,14 +62,12 @@ public class GUIController {
         target.setPrefWidth(535);
         target.setPrefWidth(438);
 
-
-
-        Blockpane.setAlignment(Pos.TOP_LEFT);
-        Blockpane.getChildren().addAll(source.getBlockLabel(),source2.getBlockLabel());
+        //Blockpane.setAlignment(Pos.TOP_LEFT);
+        //Blockpane.getChildren().addAll(source.getBlockLabel(),source2.getBlockLabel());
         Architecture.getChildren().addAll(target);
     }
 
-    private void refreshLabel(String addString, String position, int type){
+    private void refreshLabel(BlockDisplay selected, String position, int type){
         counter++;
 
         int counterPadding = 1;
@@ -51,7 +75,7 @@ public class GUIController {
         BlockDisplay endNew = null;
 
         ArrayList<Label> ResultList = new ArrayList<Label>();
-        BlockDisplay newOne = new BlockDisplay(new Label(addString+counter),type);
+        BlockDisplay newOne = new BlockDisplay(selected);
         newOne.getBlockLabel().setTextFill(Color.BLACK);
 
         for (BlockDisplay temp : SourceList) {
@@ -63,7 +87,7 @@ public class GUIController {
                     counter++;
                     counter_2++;
                     ResultList.add(targetLabelCreation(counter_2));
-                    endNew = new BlockDisplay(new Label("END"+addString),2);
+                    endNew = new BlockDisplay(new Label("END"+selected.g),2);
                     endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
                     ResultList.add(endNew.getBlockLabel());
                 }
@@ -148,7 +172,7 @@ public class GUIController {
             public void handle(DragEvent event) {
                 /* mouse moved away, remove the graphical cues */
                 target.setTextFill(Color.BLACK);
-
+                target.setStyle("-fx-background-color: #505c7c;");
                 event.consume();
             }
         });
@@ -162,7 +186,7 @@ public class GUIController {
                 boolean success = false;
                 if (db.hasString()) {
                     //target.setText(db.getString());
-                    refreshLabel(db.getString(),target.getText(),tempType);
+                    refreshLabel(tempBlock,target.getText(),tempBlock.getType());
                     success = true;
                 }
                 /* let the source know whether the string was successfully
@@ -187,7 +211,7 @@ public class GUIController {
                 ClipboardContent content = new ClipboardContent();
                 content.putString(source.getBlockLabel().getText());
                 db.setContent(content);
-                tempType = source.getType();
+                tempBlock = source;
                 event.consume();
             }
         });

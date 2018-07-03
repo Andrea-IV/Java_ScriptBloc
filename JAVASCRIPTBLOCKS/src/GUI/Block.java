@@ -6,19 +6,31 @@ public class Block {
     private int id;
     private String name;
     private String description;
-    private ArrayList<Arguments> args;
+    private String type;
+    public ArrayList<Arguments> args;
 
-    public Block(int id, String name, String description) {
+    public Block(int id, String name, String description, String type) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.type = type;
+        args = new ArrayList<Arguments>();
     }
 
-    public Block(int id, String name, String description, ArrayList<Arguments> args) {
+    public Block(int id, String name, String description, String type, ArrayList<Arguments> args) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.args = args;
+        this.type = type;
+    }
+
+    public Block(Block another){
+        this.id = another.getId();
+        this.name = another.getName();
+        this.description = another.getDescription();
+        this.args = (ArrayList<Arguments>)another.getArgs().clone();
+        this.type = another.getType();
     }
 
     public int getId() {
@@ -51,5 +63,13 @@ public class Block {
 
     public void setArgs(ArrayList<Arguments> args) {
         this.args = args;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
