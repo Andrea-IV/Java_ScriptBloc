@@ -87,7 +87,7 @@ public class GUIController {
                     counter++;
                     counter_2++;
                     ResultList.add(targetLabelCreation(counter_2));
-                    endNew = new BlockDisplay(new Label("END"+selected.g),2);
+                    endNew = new BlockDisplay(new Label("END"+selected.block.getName()),2);
                     endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
                     ResultList.add(endNew.getBlockLabel());
                 }
@@ -113,7 +113,7 @@ public class GUIController {
                 counter++;
                 counter_2++;
                 ResultList.add(targetLabelCreation(counter_2));
-                endNew = new BlockDisplay(new Label("END"+addString),2);
+                endNew = new BlockDisplay(new Label("END"+selected.block.getName()),2);
                 endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
                 ResultList.add(endNew.getBlockLabel());
             }
