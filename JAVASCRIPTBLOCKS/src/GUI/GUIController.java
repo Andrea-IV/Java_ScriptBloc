@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.*;
 
@@ -39,7 +41,7 @@ public class GUIController {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         BlockDisplay source;
         try{
-            JSONArray jsonObj = new JSONArray(api.ApiGetResponse("block/full?instruction=0"));
+            JSONArray jsonObj = new JSONArray(api.ApiGetResponse("block/full?instructions=0"));
             int counter = 0;
             for (int i = 0; i < jsonObj.length(); i++) {
                 source = new BlockDisplay(new Label((String)jsonObj.getJSONObject(i).get("name")),0);
@@ -238,42 +240,73 @@ public class GUIController {
     }
 
     private void addAction(BlockDisplay newOne){
-    newOne.blockLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
-        @Override
-        public void handle(MouseEvent t) {
-            description.setText(newOne.block.getDescription());
-            blockTitle.setText(newOne.block.getName());
-            Label tempLabel;
-            TextField tempField;
-            Tooltip tooltip;
-            RowConstraints rc;
-            argBox.getChildren().clear();
-            argBox.getRowConstraints().clear();
-            int counter = 0;
-            for(Arguments argsObj : newOne.block.args){
+        newOne.blockLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent t) {
+                description.setText(newOne.block.getDescription());
+                blockTitle.setText(newOne.block.getName());
+                Label tempLabel;
+                TextField tempField;
+                Tooltip tooltip;
+                RowConstraints rc;
+                argBox.getChildren().clear();
+                argBox.getRowConstraints().clear();
+                int counter = 0;
+                for(Arguments argsObj : newOne.block.args){
 
-                tempLabel = new Label(argsObj.getName());
-                tooltip = new Tooltip();
-                tempField = new TextField();
-                tooltip.setText(argsObj.getDescription());
-                tempLabel.setTooltip(tooltip);
-                tempLabel.setTextFill(Color.web("#a0a2ab"));
+                    tempLabel = new Label(argsObj.getName());
+                    tooltip = new Tooltip();
+                    tempField = new TextField();
+                    tooltip.setText(argsObj.getDescription());
+                    tempLabel.setTooltip(tooltip);
+                    tempLabel.setTextFill(Color.web("#a0a2ab"));
 
-                tempField.setText(argsObj.getValue());
-                tempField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    argsObj.setValue(newValue);
-                });
+                    tempField.setText(argsObj.getValue());
+                    tempField.textProperty().addListener((observable, oldValue, newValue) -> {
+                        argsObj.setValue(newValue);
+                    });
 
-                argBox.add(tempLabel, 0,counter);
-                argBox.add(tempField, 1, counter);
-                rc = new RowConstraints();
-                rc.setMinHeight(40);
-                rc.setPrefHeight(40);
-                rc.setMaxHeight(40);
-                argBox.getRowConstraints().add(rc);
-                counter++;
+                    argBox.add(tempLabel, 0,counter);
+                    argBox.add(tempField, 1, counter);
+                    rc = new RowConstraints();
+                    rc.setMinHeight(40);
+                    rc.setPrefHeight(40);
+                    rc.setMaxHeight(40);
+                    argBox.getRowConstraints().add(rc);
+                    counter++;
+                }
             }
-        }
-    });
+        });
     }
+
+    public void setArchitecture (JSONArray json) throws JSONException {
+        for(int i = 0; i < json.length(); i++) {
+            JSONObject jso = json.getJSONObject(i);
+//            System.out.println(jso.getJSONObject("arguments"));
+            Iterator keys = jso.keys();
+            int j = 0;
+
+            System.out.println("id = " + ((JSONObject) jso).get("id"));
+
+            while(keys.hasNext()) {
+                String key = (String) keys.next();
+                if(jso.get(key) instanceof JSONObject) {
+                    JSONObject value = (JSONObject) jso.get(key);
+                    while(value.has("#blocks"+j)) {
+
+//                        String component = v.getJSONArray("#blocks" + j).toString();
+//                        System.out.println("\t"+component);
+                        setArchitecture(value.getJSONArray("#blocks" + j));
+                        j++;
+                    }
+                } else {
+                    break;
+                }
+            }
+            // PLACER LES ELEMENTS DANS ARCHITECTURE ET TOUT
+        }
+
+        Architecture.getChildren().add(new Label("test"));
+    }
+
 }

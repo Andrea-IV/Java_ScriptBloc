@@ -106,7 +106,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </VBox>
-      <VBox id="convert_project" alignment="CENTER" layoutX="530.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
+      <VBox id="convert_project" alignment="CENTER" layoutX="530.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#convertProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
          <children>
             <ImageView fitHeight="95.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true">
                <image>
