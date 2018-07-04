@@ -43,7 +43,9 @@ public class GUIController {
             int counter = 0;
             for (int i = 0; i < jsonObj.length(); i++) {
                 source = new BlockDisplay(new Label((String)jsonObj.getJSONObject(i).get("name")),0);
-                source.blockLabel.setStyle("-fx-background-color: slateblue;");
+                source.blockLabel.setStyle("-fx-background-color: slateblue;-fx-background-radius: 50;");
+                source.blockLabel.setPrefWidth(100);
+                source.blockLabel.setAlignment(Pos.CENTER);
                 source.block = new Block((int)jsonObj.getJSONObject(i).get("id"),(String)jsonObj.getJSONObject(i).get("name"),(String)jsonObj.getJSONObject(i).get("description"),(String)jsonObj.getJSONObject(i).get("type"));
                 if(!((String)jsonObj.getJSONObject(i).get("type")).equals("simple")){
                     source.setType(1);
@@ -75,25 +77,42 @@ public class GUIController {
     }
 
     private void refreshLabel(BlockDisplay selected, String position){
-
         int counterPadding = 1;
         int counter_2 = 0;
         BlockDisplay endNew = null;
+        ArrayList<BlockDisplay> container = new ArrayList<BlockDisplay>();
 
         ArrayList<Label> ResultList = new ArrayList<Label>();
-        System.out.println();
         BlockDisplay newOne = new BlockDisplay(selected);
 
         selected.getBlockLabel().setTextFill(Color.BLACK);
 
         for (BlockDisplay temp : SourceList) {
-            ResultList.add(targetLabelCreation(counter_2));
+            System.out.println(temp.getType());
+            if(temp.getType() != 3 && temp.getType() != 2) {
+                ResultList.add(targetLabelCreation(counter_2));
+            }
             if(counter_2 == Integer.parseInt(position)) {
                 newOne.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
                 ResultList.add(newOne.getBlockLabel());
                 if (newOne.getType() == 1) {
+                    String[] insideContainer = newOne.block.getType().split("\\|");
+                    counterPadding++;
+                    container = new ArrayList<BlockDisplay>();
                     counter_2++;
-                    ResultList.add(targetLabelCreation(counter_2));
+                    for(String inside : insideContainer){
+                        endNew = new BlockDisplay(new Label(inside),3);
+                        endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                        container.add(endNew);
+                        ResultList.add(endNew.getBlockLabel());
+                        counter_2++;
+                        ResultList.add(targetLabelCreation(counter_2));
+                        endNew = new BlockDisplay(new Label("END"+inside),4);
+                        endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                        ResultList.add(endNew.getBlockLabel());
+                        counter_2++;
+                    }
+                    counterPadding--;
                     endNew = new BlockDisplay(new Label("END"+selected.block.getName()),2);
                     endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
                     ResultList.add(endNew.getBlockLabel());
@@ -101,11 +120,11 @@ public class GUIController {
                 counter_2++;
                 ResultList.add(targetLabelCreation(counter_2));
             }
-            if(temp.getType() == 2){
+            if(temp.getType() == 2 || temp.getType() == 4){
                 counterPadding--;
             }
             temp.getBlockLabel().setStyle("-fx-label-padding: 0 "+(10 * counterPadding)+";");
-            if(temp.getType() == 1){
+            if(temp.getType() == 1 || temp.getType() == 3){
                 counterPadding++;
             }
             ResultList.add(temp.getBlockLabel());
@@ -117,8 +136,24 @@ public class GUIController {
             ResultList.add(targetLabelCreation(counter_2));
             ResultList.add(newOne.getBlockLabel());
             if (newOne.getType() == 1) {
+                String[] insideContainer = newOne.block.getType().split("\\|");
+                counterPadding++;
+                container = new ArrayList<BlockDisplay>();
                 counter_2++;
-                ResultList.add(targetLabelCreation(counter_2));
+                for(String inside : insideContainer){
+                    endNew = new BlockDisplay(new Label(inside),3);
+                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                    container.add(endNew);
+                    ResultList.add(endNew.getBlockLabel());
+                    counter_2++;
+                    ResultList.add(targetLabelCreation(counter_2));
+                    endNew = new BlockDisplay(new Label("END"+inside),4);
+                    container.add(endNew);
+                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                    ResultList.add(endNew.getBlockLabel());
+                    counter_2++;
+                }
+                counterPadding--;
                 endNew = new BlockDisplay(new Label("END"+selected.block.getName()),2);
                 endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
                 ResultList.add(endNew.getBlockLabel());
@@ -128,7 +163,12 @@ public class GUIController {
         addAction(newOne);
         SourceList.add(Integer.parseInt(position), newOne);
         if(newOne.getType() == 1){
-            SourceList.add(Integer.parseInt(position)+1, endNew);
+            int counterContained = 1;
+            for(BlockDisplay contained : container){
+                SourceList.add(Integer.parseInt(position)+counterContained, contained);
+                counterContained++;
+            }
+            SourceList.add(Integer.parseInt(position)+counterContained, endNew);
         }
         Label last = targetLabelCreation(counter_2);
         last.setPrefHeight(535);
