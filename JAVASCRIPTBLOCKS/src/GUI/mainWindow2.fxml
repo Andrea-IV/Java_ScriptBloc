@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXScrollPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -9,6 +8,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -16,7 +16,10 @@
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -51,15 +54,23 @@
                   <JFXTextField focusColor="#a0a2ab" layoutX="33.0" layoutY="8.0" promptText="Search Bar" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
                </children>
             </AnchorPane>
-            <BorderPane prefHeight="521.0" prefWidth="200.0">
-               <left>
-                  <JFXScrollPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="516.0" prefWidth="202.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="200.0">
                      <children>
-                        <FlowPane fx:id="Blockpane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="520.0" prefWidth="210.0" style="-fx-background-color: #2D3447;" />
+                        <GridPane fx:id="Blockpane" hgap="5.0" layoutX="-1.0" layoutY="14.0" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
                      </children>
-                  </JFXScrollPane>
-               </left>
-            </BorderPane>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
          </children>
          <padding>
             <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
@@ -72,66 +83,43 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefHeight="101.0" prefWidth="273.0" style="-fx-background-color: #2D3447;">
-               <center>
-                  <Label text="Nom de Block" textFill="#a0a2ab" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </center>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <bottom>
-                  <AnchorPane prefHeight="7.0" prefWidth="290.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Separator layoutX="91.0" layoutY="6.0" prefHeight="17.0" prefWidth="108.0">
-                           <effect>
-                              <BoxBlur height="0.0" width="181.07" />
-                           </effect>
-                        </Separator>
-                     </children>
-                  </AnchorPane>
-               </bottom>
-            </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <Label fx:id="blockTitle" alignment="CENTER" prefWidth="300.0" text="Nom de Block" textFill="#a0a2ab">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Separator depthTest="ENABLE" maxWidth="-Infinity" prefHeight="17.0" prefWidth="100.0" scaleShape="false" translateX="85.0">
+               <effect>
+                  <BoxBlur height="0.0" width="181.07" />
+               </effect>
+            </Separator>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="270.0" text="Description" textFill="#a0a2ab">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Separator maxWidth="-Infinity" prefHeight="13.0" prefWidth="100.0" translateX="85.0">
                <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                  <Insets bottom="5.0" top="5.0" />
                </padding>
-               <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #2D3447;" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Description" textFill="#a0a2ab">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Separator layoutX="65.0" layoutY="11.0" prefHeight="13.0" prefWidth="129.0">
-                                 <padding>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </padding>
-                                 <effect>
-                                    <BoxBlur height="0.0" width="181.07" />
-                                 </effect>
-                              </Separator>
-                           </children>
-                        </AnchorPane>
-                        <Text fill="#a0a2ab" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, &#10;consectetur adipiscing elit, &#10;sed do eiusmod tempor incididunt &#10;ut labore et dolore magna aliqua. &#10;Ut enim ad minim veniam, quis nostrud&#10;" />
-                     </children>
-                  </VBox>
-               </center>
-            </BorderPane>
-            <BorderPane prefHeight="363.0" prefWidth="280.0">
-               <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #2D3447;" BorderPane.alignment="CENTER" />
-               </center>
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-            </BorderPane>
+               <effect>
+                  <BoxBlur height="0.0" width="181.07" />
+               </effect>
+            </Separator>
+            <Text fx:id="description" fill="#a0a2ab" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="266.826171875">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <GridPane fx:id="argBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="270.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="189.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
          </children>
          <BorderPane.margin>
             <Insets />
@@ -153,7 +141,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="526.0" prefWidth="420.0">
                            <children>
-                              <VBox fx:id="Architecture" layoutX="-1.0" prefHeight="536.0" prefWidth="451.0" style="-fx-background-color: #505c7c; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 100, 0, 0, 0);" />
+                              <VBox fx:id="Architecture" layoutX="-1.0" prefHeight="536.0" prefWidth="462.0" style="-fx-background-color: #505c7c; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 100, 0, 0, 0);" />
                            </children>
                         </AnchorPane>
                      </content>

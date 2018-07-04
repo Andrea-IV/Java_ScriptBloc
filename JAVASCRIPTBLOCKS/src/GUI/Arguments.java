@@ -4,13 +4,23 @@ public class Arguments implements Cloneable{
     private int id;
     private String name;
     private String value;
+    private String key;
     private String description;
 
-    public Arguments(int id, String name, String value, String description) {
+    public Arguments(int id, String name, String key, String description) {
         this.id = id;
         this.name = name;
-        this.value = value;
+        this.key = key;
         this.description = description;
+        this.value = "";
+    }
+
+    public Arguments(int id, String name, String key, String description, String Value) {
+        this.id = id;
+        this.name = name;
+        this.key = key;
+        this.description = description;
+        this.value = value;
     }
 
     public int getId() {
@@ -39,6 +49,14 @@ public class Arguments implements Cloneable{
 
     public String getDescription() {
         return description;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setDescription(String description) {

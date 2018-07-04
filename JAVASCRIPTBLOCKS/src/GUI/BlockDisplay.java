@@ -14,7 +14,7 @@ public class BlockDisplay {
     }
 
     public BlockDisplay(BlockDisplay another){
-        this.blockLabel = another.getBlockLabel();
+        this.blockLabel = new Label(another.blockLabel.getText());
         this.type = another.getType();
         this.block = new Block(another.block);
     }

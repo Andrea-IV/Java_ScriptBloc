@@ -29,7 +29,12 @@ public class Block {
         this.id = another.getId();
         this.name = another.getName();
         this.description = another.getDescription();
-        this.args = (ArrayList<Arguments>)another.getArgs().clone();
+        this.args = new ArrayList<Arguments>();
+        Arguments newOne;
+        for(Arguments argObj: another.getArgs()){
+             newOne = new Arguments(argObj.getId(), argObj.getName(), argObj.getKey(), argObj.getDescription());
+             this.args.add(newOne);
+        }
         this.type = another.getType();
     }
 
