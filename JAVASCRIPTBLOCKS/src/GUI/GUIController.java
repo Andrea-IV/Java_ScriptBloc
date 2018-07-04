@@ -4,10 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -15,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.json.JSONArray;
+import java.awt.event.KeyEvent.*;
 
 import java.util.*;
 
@@ -71,7 +69,7 @@ public class GUIController {
         }
 
         Label target = targetLabelCreation(0);
-        target.setPrefWidth(535);
+        target.setPrefHeight(535);
         target.setPrefWidth(438);
         Architecture.getChildren().addAll(target);
     }
@@ -88,7 +86,6 @@ public class GUIController {
         selected.getBlockLabel().setTextFill(Color.BLACK);
 
         for (BlockDisplay temp : SourceList) {
-            System.out.println(temp.getType());
             if(temp.getType() != 3 && temp.getType() != 2) {
                 ResultList.add(targetLabelCreation(counter_2));
             }
@@ -278,42 +275,110 @@ public class GUIController {
     }
 
     private void addAction(BlockDisplay newOne){
-    newOne.blockLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
-        @Override
-        public void handle(MouseEvent t) {
-            description.setText(newOne.block.getDescription());
-            blockTitle.setText(newOne.block.getName());
-            Label tempLabel;
-            TextField tempField;
-            Tooltip tooltip;
-            RowConstraints rc;
-            argBox.getChildren().clear();
-            argBox.getRowConstraints().clear();
-            int counter = 0;
-            for(Arguments argsObj : newOne.block.args){
+        newOne.blockLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent t) {
+                description.setText(newOne.block.getDescription());
+                blockTitle.setText(newOne.block.getName());
+                Label tempLabel;
+                TextField tempField;
+                Tooltip tooltip;
+                RowConstraints rc;
+                argBox.getChildren().clear();
+                argBox.getRowConstraints().clear();
+                int counter = 0;
+                for(Arguments argsObj : newOne.block.args){
 
-                tempLabel = new Label(argsObj.getName());
-                tooltip = new Tooltip();
-                tempField = new TextField();
-                tooltip.setText(argsObj.getDescription());
-                tempLabel.setTooltip(tooltip);
-                tempLabel.setTextFill(Color.web("#a0a2ab"));
+                    tempLabel = new Label(argsObj.getName());
+                    tooltip = new Tooltip();
+                    tempField = new TextField();
+                    tooltip.setText(argsObj.getDescription());
+                    tempLabel.setTooltip(tooltip);
+                    tempLabel.setTextFill(Color.web("#a0a2ab"));
 
-                tempField.setText(argsObj.getValue());
-                tempField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    argsObj.setValue(newValue);
-                });
+                    tempField.setText(argsObj.getValue());
+                    tempField.textProperty().addListener((observable, oldValue, newValue) -> {
+                        argsObj.setValue(newValue);
+                    });
 
-                argBox.add(tempLabel, 0,counter);
-                argBox.add(tempField, 1, counter);
-                rc = new RowConstraints();
-                rc.setMinHeight(40);
-                rc.setPrefHeight(40);
-                rc.setMaxHeight(40);
-                argBox.getRowConstraints().add(rc);
-                counter++;
+                    argBox.add(tempLabel, 0,counter);
+                    argBox.add(tempField, 1, counter);
+                    rc = new RowConstraints();
+                    rc.setMinHeight(40);
+                    rc.setPrefHeight(40);
+                    rc.setMaxHeight(40);
+                    argBox.getRowConstraints().add(rc);
+                    counter++;
+                }
+            }
+        });
+
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem item1 = new MenuItem("Delete");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                remove(newOne);
+            }
+        });
+
+        contextMenu.getItems().add(item1);
+
+        // When user right-click on Circle
+        newOne.blockLabel.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+            @Override
+            public void handle(ContextMenuEvent event) {
+
+                contextMenu.show(newOne.blockLabel, event.getScreenX(), event.getScreenY());
+            }
+        });
+    }
+
+    public void remove(BlockDisplay newOne){
+        int counter_1 = 0;
+        for(int i = 0; i < SourceList.size() ;i++) {
+            System.out.println(SourceList.get(i));
+        }
+        for(int i = 0; i < SourceList.size() ;i++){
+            if(newOne == SourceList.get(i)){
+                if(SourceList.get(i).getType() == 1){
+                    counter_1=1;
+                    SourceList.remove(i);
+                    while(true){
+                        if(SourceList.size() == i){
+                            break;
+                        }
+                        switch(SourceList.get(i).getType()){
+                            case 1:
+                                SourceList.remove(i);
+                                counter_1++;
+                                break;
+                            case 2:
+                                SourceList.remove(i);
+                                counter_1--;
+                                break;
+                            default :
+                                SourceList.remove(i);
+                                break;
+                        }
+                        if(counter_1 == 0){
+                            break;
+                        }
+                    }
+                }else{
+                    SourceList.remove(i);
+                }
             }
         }
-    });
+        System.out.println("--------------------------------------------");
+        for(int i = 0; i < SourceList.size() ;i++) {
+            System.out.println(SourceList.get(i));
+        }
+    }
+
+    public void reDisplay(){
+
     }
 }
