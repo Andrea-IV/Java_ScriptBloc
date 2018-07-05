@@ -2,7 +2,6 @@ package GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
@@ -10,9 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import org.json.JSONArray;
-import java.awt.event.KeyEvent.*;
 
 import java.util.*;
 
@@ -174,14 +171,6 @@ public class GUIController {
 
         Architecture.getChildren().clear();
         Architecture.getChildren().addAll(ResultList);
-        /*System.out.println("--SourceList--");
-        for(BlockDisplay test: SourceList){
-            System.out.println(test.blockLabel.getText());
-        }
-        System.out.println("--RESULTLISTREFRESH--");
-        for(Label test: ResultList){
-            System.out.println(test.getText());
-        }*/
     }
 
     private Label targetLabelCreation(Integer number){
@@ -400,10 +389,6 @@ public class GUIController {
                 break;
             }
         }
-        /*System.out.println("--DELETE--");
-        for(int i = 0; i < SourceList.size() ;i++) {
-            System.out.println(SourceList.get(i).blockLabel.getText());
-        }*/
         reDisplay();
     }
 
@@ -435,10 +420,6 @@ public class GUIController {
 
         Architecture.getChildren().clear();
         Architecture.getChildren().addAll(ResultList);
-        /*System.out.println("--RESULTLIST--");
-        for(Label test: ResultList){
-            System.out.println(test.getText());
-        }*/
     }
 
     public void copyPaste(String newOne, int position){
@@ -475,14 +456,6 @@ public class GUIController {
             }
         }
         counter_1 = 0;
-        System.out.println("-- Position");
-        System.out.println(position);
-        System.out.println("-- Start");
-        System.out.println(start);
-        System.out.println("-- End");
-        System.out.println(end);
-        System.out.println("-- Size");
-        System.out.println(SourceList.size());
         if(position == SourceList.size()){
             for(int j = start; j <= end ;j++) {
                 SourceList.add(SourceList.remove(start));
@@ -491,31 +464,18 @@ public class GUIController {
             for(int i = 0; i < SourceList.size() ;i++) {
                 if(counter_1 == position) {
                     if(position <= start) {
-                        System.out.println("BEFORE");
                         for (int j = start; j <= end; j++) {
-                            System.out.println(i);
                             SourceList.add(i, SourceList.remove(j));
                             i++;
                         }
                         break;
                     }else{
-                        System.out.println("AFTER");
                         for (int j = start; j <= end; j++) {
                             SourceList.add(i-1, SourceList.remove(start));
                         }
                         break;
                     }
                 }
-                /*switch(SourceList.get(i).getType()){
-                    case 2:
-                        counter_1++;
-                        break;
-                    case 4:
-                        counter_1++;
-                        break;
-                    case 0:
-                        counter_1++;
-                }*/
                 counter_1++;
             }
         }

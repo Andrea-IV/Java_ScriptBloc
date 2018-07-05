@@ -1,0 +1,141 @@
+GUI FUNCTION DOCUMENTATION
+----------CLASS----------
+GUI.ApiCall
+-------------------------
+----------CLASS----------
+GUI.Arguments
+-------------------------
+----------CLASS----------
+GUI.Block
+-------------------------
+----------CLASS----------
+GUI.BlockDisplay
+-------------------------
+
+    -------CONSTRUCTOR-------
+         BlockDisplay(Label label, int type)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Basic Constructor
+    -- ARGUMENTS : 1: Label label, the label that will be put in the current BlockDisplay, 2: int type, the type that will be put in the current BlockDisplay
+    -- RETURN : None
+
+    -------CONSTRUCTOR-------
+         BlockDisplay(BlockDisplay another)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Constructor to make a Copy
+    -- ARGUMENTS : 1: BlockDisplay another, the BlockDisplay to copy in the current BlockDisplay
+    -- RETURN : None
+
+    ----------FIELD----------
+         Label blockLabel
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : The Label used for the archicteture
+
+    ----------FIELD----------
+         Block block
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : The block contained by the display block
+
+    ---------METHOD----------
+         getType()
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Get the Type
+    -- ARGUMENTS : None
+    -- RETURN : int, the type of the class
+
+    ---------METHOD----------
+         setBlockLabel()
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Label Setter
+    -- ARGUMENTS : 1: Label Blocklabel, The new label to put in the BlockDisplay
+    -- RETURN : void
+
+    ---------METHOD----------
+         getBlockLabel()
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Get the BlockLabel
+    -- ARGUMENTS : None
+    -- RETURN : Label, the blocklabel of the class
+
+    ---------METHOD----------
+         setType()
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Type Setter
+    -- ARGUMENTS : 1: int Type, The new type to put in the BlockDisplay
+    -- RETURN : void
+----------CLASS----------
+GUI.ClassFinder
+-------------------------
+----------CLASS----------
+GUI.GUI
+-------------------------
+
+    ---------METHOD----------
+         main(String[] args)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : The Main, launch start & parse annotations
+    -- ARGUMENTS : 1: String[] args, The rgs
+    -- RETURN : None
+
+    ---------METHOD----------
+         start(Stage stage)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Init the Base Window
+    -- ARGUMENTS : 1: Stage stage, The stage to be set
+    -- RETURN : None
+
+    ---------METHOD----------
+         writeConstructorInFile(Constructor[] methodArray, PrintWriter writer)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Loop on all the constructors to print annotation in the doc
+    -- ARGUMENTS : 1: Constructor[] methodArray, list of constructor to write the doc, 2: PrintWriter writer, printer to write in the doc field
+    -- RETURN : None
+
+    ---------METHOD----------
+         writeMethodInFile(Method[] methodArray, PrintWriter writer)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
+    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
+    -- RETURN : None
+
+    ---------METHOD----------
+         writeFieldInFile(Field[] methodArray, PrintWriter writer)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
+    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
+    -- RETURN : None
+----------CLASS----------
+GUI.GUIController
+-------------------------
+----------CLASS----------
+GUI.GUIHomepageController
+-------------------------
+----------CLASS----------
+GUI.MethodInfo
+-------------------------
