@@ -106,6 +106,7 @@ public class GUIController {
                         ResultList.add(targetLabelCreation(counter_2));
                         endNew = new BlockDisplay(new Label("END"+inside),4);
                         endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                        container.add(endNew);
                         ResultList.add(endNew.getBlockLabel());
                         counter_2++;
                     }
@@ -173,6 +174,14 @@ public class GUIController {
 
         Architecture.getChildren().clear();
         Architecture.getChildren().addAll(ResultList);
+        /*System.out.println("--SourceList--");
+        for(BlockDisplay test: SourceList){
+            System.out.println(test.blockLabel.getText());
+        }
+        System.out.println("--RESULTLISTREFRESH--");
+        for(Label test: ResultList){
+            System.out.println(test.getText());
+        }*/
     }
 
     private Label targetLabelCreation(Integer number){
@@ -229,8 +238,11 @@ public class GUIController {
                 boolean success = false;
                 if (db.hasString()) {
                     //target.setText(db.getString());
-                    refreshLabel(tempBlock,target.getText());
-
+                    if(db.getString().contains("#COPY&PASTE#")){
+                        copyPaste(db.getString().split("\\|")[1],Integer.parseInt(target.getText()));
+                    }else{
+                        refreshLabel(tempBlock,target.getText());
+                    }
                     success = true;
                 }
                 /* let the source know whether the string was successfully
@@ -275,6 +287,24 @@ public class GUIController {
     }
 
     private void addAction(BlockDisplay newOne){
+        newOne.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                tempBlock = new BlockDisplay(newOne);
+                Dragboard db = newOne.getBlockLabel().startDragAndDrop(TransferMode.ANY);
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("#COPY&PASTE#|"+newOne);
+                db.setContent(content);
+
+                event.consume();
+            }
+        });
+
+        newOne.getBlockLabel().setOnDragDone(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                event.consume();
+            }
+        });
         newOne.blockLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent t) {
@@ -338,9 +368,6 @@ public class GUIController {
 
     public void remove(BlockDisplay newOne){
         int counter_1 = 0;
-        for(int i = 0; i < SourceList.size() ;i++) {
-            System.out.println(SourceList.get(i));
-        }
         for(int i = 0; i < SourceList.size() ;i++){
             if(newOne == SourceList.get(i)){
                 if(SourceList.get(i).getType() == 1){
@@ -370,15 +397,128 @@ public class GUIController {
                 }else{
                     SourceList.remove(i);
                 }
+                break;
             }
         }
-        System.out.println("--------------------------------------------");
+        /*System.out.println("--DELETE--");
         for(int i = 0; i < SourceList.size() ;i++) {
-            System.out.println(SourceList.get(i));
-        }
+            System.out.println(SourceList.get(i).blockLabel.getText());
+        }*/
+        reDisplay();
     }
 
     public void reDisplay(){
+        int counterPadding = 1;
+        int counter_2 = 0;
 
+        ArrayList<Label> ResultList = new ArrayList<Label>();
+
+        for (BlockDisplay temp : SourceList) {
+            if(temp.getType() != 3 && temp.getType() != 2) {
+                ResultList.add(targetLabelCreation(counter_2));
+            }
+
+            if(temp.getType() == 2 || temp.getType() == 4){
+                counterPadding--;
+            }
+            temp.getBlockLabel().setStyle("-fx-label-padding: 0 "+(10 * counterPadding)+";");
+            if(temp.getType() == 1 || temp.getType() == 3){
+                counterPadding++;
+            }
+            ResultList.add(temp.getBlockLabel());
+            counter_2++;
+        }
+
+        Label last = targetLabelCreation(counter_2);
+        last.setPrefHeight(535);
+        ResultList.add(last);
+
+        Architecture.getChildren().clear();
+        Architecture.getChildren().addAll(ResultList);
+        /*System.out.println("--RESULTLIST--");
+        for(Label test: ResultList){
+            System.out.println(test.getText());
+        }*/
+    }
+
+    public void copyPaste(String newOne, int position){
+        int start = 0;
+        int end = 0;
+        int counter_1;
+        for(int i = 0; i < SourceList.size() ;i++){
+            if(newOne .equals(SourceList.get(i).toString())){
+                start = i;
+                if(SourceList.get(i).getType() == 1){
+                    counter_1=1;
+                    while(true){
+                        System.out.println("-- I ");
+                        System.out.println(i);
+                        i++;
+                        if(SourceList.size() == i){
+                            break;
+                        }
+                        switch(SourceList.get(i).getType()){
+                            case 1:
+                                counter_1++;
+                                break;
+                            case 2:
+                                counter_1--;
+                                break;
+                        }
+                        if(counter_1 == 0){
+                            break;
+                        }
+                    }
+                }
+                end = i;
+                break;
+            }
+        }
+        counter_1 = 0;
+        System.out.println("-- Position");
+        System.out.println(position);
+        System.out.println("-- Start");
+        System.out.println(start);
+        System.out.println("-- End");
+        System.out.println(end);
+        System.out.println("-- Size");
+        System.out.println(SourceList.size());
+        if(position == SourceList.size()){
+            for(int j = start; j <= end ;j++) {
+                SourceList.add(SourceList.remove(start));
+            }
+        }else{
+            for(int i = 0; i < SourceList.size() ;i++) {
+                if(counter_1 == position) {
+                    if(position <= start) {
+                        System.out.println("BEFORE");
+                        for (int j = start; j <= end; j++) {
+                            System.out.println(i);
+                            SourceList.add(i, SourceList.remove(j));
+                            i++;
+                        }
+                        break;
+                    }else{
+                        System.out.println("AFTER");
+                        for (int j = start; j <= end; j++) {
+                            SourceList.add(i-1, SourceList.remove(start));
+                        }
+                        break;
+                    }
+                }
+                /*switch(SourceList.get(i).getType()){
+                    case 2:
+                        counter_1++;
+                        break;
+                    case 4:
+                        counter_1++;
+                        break;
+                    case 0:
+                        counter_1++;
+                }*/
+                counter_1++;
+            }
+        }
+        reDisplay();
     }
 }
