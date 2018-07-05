@@ -2,6 +2,33 @@ GUI FUNCTION DOCUMENTATION
 ----------CLASS----------
 GUI.ApiCall
 -------------------------
+
+    -------CONSTRUCTOR-------
+         ApiCall(String baseUrl)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Constructor of The APICall needs the base url
+    -- ARGUMENTS : 1: String baseUrl, URL of the API
+    -- RETURN : None
+
+    ---------METHOD----------
+         ApiGetResponse(String call, String urlParameters)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Api call with post arguments
+    -- ARGUMENTS : 1: String call, the arguments for the API call, 2: String urlParameters, the post parameters for the Call
+    -- RETURN : None
+
+    ---------METHOD----------
+         ApiGetResponse(String call)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Api call with get arguments
+    -- ARGUMENTS : 1: String call, the arguments for the API call
+    -- RETURN : None
 ----------CLASS----------
 GUI.Arguments
 -------------------------
@@ -54,6 +81,15 @@ GUI.BlockDisplay
     -- RETURN : int, the type of the class
 
     ---------METHOD----------
+         setType()
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Type Setter
+    -- ARGUMENTS : 1: int Type, The new type to put in the BlockDisplay
+    -- RETURN : void
+
+    ---------METHOD----------
          setBlockLabel()
     -------------------------
     -- DATE : 05/07/18
@@ -70,18 +106,18 @@ GUI.BlockDisplay
     -- DESCRIPTION : Get the BlockLabel
     -- ARGUMENTS : None
     -- RETURN : Label, the blocklabel of the class
-
-    ---------METHOD----------
-         setType()
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Type Setter
-    -- ARGUMENTS : 1: int Type, The new type to put in the BlockDisplay
-    -- RETURN : void
 ----------CLASS----------
 GUI.ClassFinder
 -------------------------
+
+    ---------METHOD----------
+         find(String scannedPackage)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Get the classes inside a package
+    -- ARGUMENTS : 1: String scannedPackage, The name of the package to get the classes
+    -- RETURN : List<Class<?>>
 ----------CLASS----------
 GUI.GUI
 -------------------------
@@ -114,21 +150,21 @@ GUI.GUI
     -- RETURN : None
 
     ---------METHOD----------
-         writeMethodInFile(Method[] methodArray, PrintWriter writer)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
-    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
-    -- RETURN : None
-
-    ---------METHOD----------
          writeFieldInFile(Field[] methodArray, PrintWriter writer)
     -------------------------
     -- DATE : 05/07/18
     -- REVISION : 1
     -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
     -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
+    -- RETURN : None
+
+    ---------METHOD----------
+         writeMethodInFile(Method[] methodArray, PrintWriter writer)
+    -------------------------
+    -- DATE : 05/07/18
+    -- REVISION : 1
+    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
+    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
     -- RETURN : None
 ----------CLASS----------
 GUI.GUIController

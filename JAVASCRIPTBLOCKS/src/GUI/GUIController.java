@@ -30,7 +30,7 @@ public class GUIController {
     private BlockDisplay tempBlock;
 
     @FXML
-    protected void initialize() {
+    public void initialize() {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         BlockDisplay source;
         try{
@@ -71,7 +71,7 @@ public class GUIController {
         Architecture.getChildren().addAll(target);
     }
 
-    private void refreshLabel(BlockDisplay selected, String position){
+    public void refreshLabel(BlockDisplay selected, String position){
         int counterPadding = 1;
         int counter_2 = 0;
         BlockDisplay endNew = null;
@@ -173,7 +173,7 @@ public class GUIController {
         Architecture.getChildren().addAll(ResultList);
     }
 
-    private Label targetLabelCreation(Integer number){
+    public Label targetLabelCreation(Integer number){
         Label target = new Label(number.toString());
         target.setPrefWidth(438);
         target.setMinHeight(10);
@@ -243,7 +243,7 @@ public class GUIController {
         return target;
     }
 
-    private void blockLabelInit(BlockDisplay source) {
+    public void blockLabelInit(BlockDisplay source) {
         source.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
@@ -275,7 +275,7 @@ public class GUIController {
         source.getBlockLabel().setTextFill(Color.WHITE);
     }
 
-    private void addAction(BlockDisplay newOne){
+    public void addAction(BlockDisplay newOne){
         newOne.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 tempBlock = new BlockDisplay(newOne);
