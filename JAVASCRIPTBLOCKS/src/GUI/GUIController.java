@@ -4,25 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.xml.transform.Source;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -52,9 +44,9 @@ public class GUIController {
     private int cnt = 0;
 
     @FXML
-    protected void initialize() {
+    @MethodInfo(name = "initialize()", date = "05/07/18", arguments = "None", comments = "Function called on the opening of the window, initialize the component, call the BDD to get the blocks", returnValue="None" ,revision = 1)
+    public void initialize() {
         array_bd = new ArrayList<BlockDisplay>();
-
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         BlockDisplay source;
         try{
@@ -94,14 +86,15 @@ public class GUIController {
         }
 
         Label target = targetLabelCreation(0);
-        target.setPrefWidth(535);
+        target.setPrefHeight(535);
         target.setPrefWidth(438);
         Architecture.getChildren().addAll(target);
 
         menu_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
     }
 
-    private void refreshLabel(BlockDisplay selected, String position){
+    @MethodInfo(name = "refreshLabel(BlockDisplay selected, String position)", date = "05/07/18", arguments = "1: BlockDisplay selected, the block move on a target in the architecture, 2: String position, the position sent by the target", comments = "used to display the architecture when a block is added or when a script is loaded", returnValue="None" ,revision = 1)
+    public void refreshLabel(BlockDisplay selected, String position){
         int counterPadding = 1;
         int counter_2 = 0;
         BlockDisplay endNew = null;
@@ -113,7 +106,6 @@ public class GUIController {
         selected.getBlockLabel().setTextFill(Color.BLACK);
 
         for (BlockDisplay temp : SourceList) {
-//            System.out.println(temp.getType());
             if(temp.getType() != 3 && temp.getType() != 2) {
                 ResultList.add(targetLabelCreation(counter_2));
             }
@@ -134,6 +126,7 @@ public class GUIController {
                         ResultList.add(targetLabelCreation(counter_2));
                         endNew = new BlockDisplay(new Label("END"+inside),4);
                         endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                        container.add(endNew);
                         ResultList.add(endNew.getBlockLabel());
                         counter_2++;
                     }
@@ -203,7 +196,8 @@ public class GUIController {
         Architecture.getChildren().addAll(ResultList);
     }
 
-    private Label targetLabelCreation(Integer number){
+    @MethodInfo(name = "targetLabelCreation(Integer number)", date = "05/07/18", arguments = "1: Integer number, the position of the target block", comments = "Initialize a Label that will be used as a target for any movement in the architecture", returnValue="Label target, the label initialized with all the handlers" ,revision = 1)
+    public Label targetLabelCreation(Integer number){
         Label target = new Label(number.toString());
         target.setPrefWidth(438);
         target.setMinHeight(10);
@@ -257,8 +251,11 @@ public class GUIController {
                 boolean success = false;
                 if (db.hasString()) {
                     //target.setText(db.getString());
-                    refreshLabel(tempBlock,target.getText());
-
+                    if(db.getString().contains("#COPY&PASTE#")){
+                        copyPaste(db.getString().split("\\|")[1],Integer.parseInt(target.getText()));
+                    }else{
+                        refreshLabel(tempBlock,target.getText());
+                    }
                     success = true;
                 }
                 /* let the source know whether the string was successfully
@@ -270,7 +267,8 @@ public class GUIController {
         return target;
     }
 
-    private void blockLabelInit(BlockDisplay source) {
+    @MethodInfo(name = "blockLabelInit(BlockDisplay source)", date = "05/07/18", arguments = "1: BlockDisplay source, the block on the left panel used to create the architecture", comments = "Initialize the BlockDisplay handlers", returnValue="None" ,revision = 1)
+    public void blockLabelInit(BlockDisplay source) {
         source.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
@@ -302,7 +300,27 @@ public class GUIController {
         source.getBlockLabel().setTextFill(Color.WHITE);
     }
 
-    private void addAction(BlockDisplay newOne){
+    @MethodInfo(name = "addAction(BlockDisplay newOne)", date = "05/07/18", arguments = "1: BlockDisplay newOne, the new block added in the architecture", comments = "Initialize the handlers for the new block in the architecture", returnValue="None" ,revision = 1)
+    public void addAction(BlockDisplay newOne){
+        newOne.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                tempBlock = new BlockDisplay(newOne);
+                Dragboard db = newOne.getBlockLabel().startDragAndDrop(TransferMode.ANY);
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("#COPY&PASTE#|"+newOne);
+                db.setContent(content);
+
+                event.consume();
+            }
+        });
+
+        newOne.getBlockLabel().setOnDragDone(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                event.consume();
+            }
+        });
+
         newOne.blockLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent t) {
@@ -338,6 +356,28 @@ public class GUIController {
                     argBox.getRowConstraints().add(rc);
                     counter++;
                 }
+            }
+        });
+
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem item1 = new MenuItem("Delete");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                remove(newOne);
+            }
+        });
+
+        contextMenu.getItems().add(item1);
+
+        // When user right-click on Circle
+        newOne.blockLabel.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+            @Override
+            public void handle(ContextMenuEvent event) {
+
+                contextMenu.show(newOne.blockLabel, event.getScreenX(), event.getScreenY());
             }
         });
     }
@@ -472,5 +512,135 @@ public class GUIController {
         } catch(JSONException e) {
             System.out.println(e);
         }
+    }
+
+    @MethodInfo(name = "remove(BlockDisplay newOne)", date = "05/07/18", arguments = "1: BlockDisplay newOne, the block which the user choose to delete", comments = "Delete the block from SourceList", returnValue="None" ,revision = 1)
+    public void remove(BlockDisplay newOne){
+        int counter_1 = 0;
+        for(int i = 0; i < SourceList.size() ;i++){
+            if(newOne == SourceList.get(i)){
+                if(SourceList.get(i).getType() == 1){
+                    counter_1=1;
+                    SourceList.remove(i);
+                    while(true){
+                        if(SourceList.size() == i){
+                            break;
+                        }
+                        switch(SourceList.get(i).getType()){
+                            case 1:
+                                SourceList.remove(i);
+                                counter_1++;
+                                break;
+                            case 2:
+                                SourceList.remove(i);
+                                counter_1--;
+                                break;
+                            default :
+                                SourceList.remove(i);
+                                break;
+                        }
+                        if(counter_1 == 0){
+                            break;
+                        }
+                    }
+                }else{
+                    SourceList.remove(i);
+                }
+                break;
+            }
+        }
+        reDisplay();
+    }
+
+    @MethodInfo(name = "reDisplay()", date = "05/07/18", arguments = "", comments = "Regenerate the architecture based on the SourceList", returnValue="None" ,revision = 1)
+    public void reDisplay(){
+        int counterPadding = 1;
+        int counter_2 = 0;
+
+        ArrayList<Label> ResultList = new ArrayList<Label>();
+
+        for (BlockDisplay temp : SourceList) {
+            if(temp.getType() != 3 && temp.getType() != 2) {
+                ResultList.add(targetLabelCreation(counter_2));
+            }
+
+            if(temp.getType() == 2 || temp.getType() == 4){
+                counterPadding--;
+            }
+            temp.getBlockLabel().setStyle("-fx-label-padding: 0 "+(10 * counterPadding)+";");
+            if(temp.getType() == 1 || temp.getType() == 3){
+                counterPadding++;
+            }
+            ResultList.add(temp.getBlockLabel());
+            counter_2++;
+        }
+
+        Label last = targetLabelCreation(counter_2);
+        last.setPrefHeight(535);
+        ResultList.add(last);
+
+        Architecture.getChildren().clear();
+        Architecture.getChildren().addAll(ResultList);
+    }
+
+    @MethodInfo(name = "copyPaste(String newOne, int position)", date = "05/07/18", arguments = "1: String newOne, the block identifier, 2: int position, the position where the block will be moved", comments = "Move the block and is Children in the SourceList", returnValue="None" ,revision = 1)
+    public void copyPaste(String newOne, int position){
+        int start = 0;
+        int end = 0;
+        int counter_1;
+        for(int i = 0; i < SourceList.size() ;i++){
+            if(newOne .equals(SourceList.get(i).toString())){
+                start = i;
+                if(SourceList.get(i).getType() == 1){
+                    counter_1=1;
+                    while(true){
+                        System.out.println("-- I ");
+                        System.out.println(i);
+                        i++;
+                        if(SourceList.size() == i){
+                            break;
+                        }
+                        switch(SourceList.get(i).getType()){
+                            case 1:
+                                counter_1++;
+                                break;
+                            case 2:
+                                counter_1--;
+                                break;
+                        }
+                        if(counter_1 == 0){
+                            break;
+                        }
+                    }
+                }
+                end = i;
+                break;
+            }
+        }
+        counter_1 = 0;
+        if(position == SourceList.size()){
+            for(int j = start; j <= end ;j++) {
+                SourceList.add(SourceList.remove(start));
+            }
+        }else{
+            for(int i = 0; i < SourceList.size() ;i++) {
+                if(counter_1 == position) {
+                    if(position <= start) {
+                        for (int j = start; j <= end; j++) {
+                            SourceList.add(i, SourceList.remove(j));
+                            i++;
+                        }
+                        break;
+                    }else{
+                        for (int j = start; j <= end; j++) {
+                            SourceList.add(i-1, SourceList.remove(start));
+                        }
+                        break;
+                    }
+                }
+                counter_1++;
+            }
+        }
+        reDisplay();
     }
 }

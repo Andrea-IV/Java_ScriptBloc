@@ -66,7 +66,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
                      <children>
-                        <GridPane fx:id="Blockpane" hgap="5.0" layoutX="-1.0" layoutY="14.0" prefHeight="30.0" vgap="2.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane fx:id="Blockpane" hgap="5.0" layoutX="-1.0" layoutY="14.0" prefHeight="30.0" vgap="2.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -74,6 +74,9 @@
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </GridPane>
                      </children>
                   </AnchorPane>
@@ -114,7 +117,7 @@
                   <BoxBlur height="0.0" width="181.07" />
                </effect>
             </Separator>
-            <Text fx:id="description" fill="#a0a2ab" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="266.826171875">
+            <Text fx:id="description" fill="#a0a2ab" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="266.826171875">
                <font>
                   <Font size="14.0" />
                </font>
