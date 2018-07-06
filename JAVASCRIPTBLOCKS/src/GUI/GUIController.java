@@ -30,6 +30,7 @@ public class GUIController {
     private BlockDisplay tempBlock;
 
     @FXML
+    @MethodInfo(name = "initialize()", date = "05/07/18", arguments = "None", comments = "Function called on the opening of the window, initialize the component, call the BDD to get the blocks", returnValue="None" ,revision = 1)
     public void initialize() {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         BlockDisplay source;
@@ -71,6 +72,7 @@ public class GUIController {
         Architecture.getChildren().addAll(target);
     }
 
+    @MethodInfo(name = "refreshLabel(BlockDisplay selected, String position)", date = "05/07/18", arguments = "1: BlockDisplay selected, the block move on a target in the architecture, 2: String position, the position sent by the target", comments = "used to display the architecture when a block is added or when a script is loaded", returnValue="None" ,revision = 1)
     public void refreshLabel(BlockDisplay selected, String position){
         int counterPadding = 1;
         int counter_2 = 0;
@@ -173,6 +175,7 @@ public class GUIController {
         Architecture.getChildren().addAll(ResultList);
     }
 
+    @MethodInfo(name = "targetLabelCreation(Integer number)", date = "05/07/18", arguments = "1: Integer number, the position of the target block", comments = "Initialize a Label that will be used as a target for any movement in the architecture", returnValue="Label target, the label initialized with all the handlers" ,revision = 1)
     public Label targetLabelCreation(Integer number){
         Label target = new Label(number.toString());
         target.setPrefWidth(438);
@@ -243,6 +246,7 @@ public class GUIController {
         return target;
     }
 
+    @MethodInfo(name = "blockLabelInit(BlockDisplay source)", date = "05/07/18", arguments = "1: BlockDisplay source, the block on the left panel used to create the architecture", comments = "Initialize the BlockDisplay handlers", returnValue="None" ,revision = 1)
     public void blockLabelInit(BlockDisplay source) {
         source.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -275,6 +279,7 @@ public class GUIController {
         source.getBlockLabel().setTextFill(Color.WHITE);
     }
 
+    @MethodInfo(name = "addAction(BlockDisplay newOne)", date = "05/07/18", arguments = "1: BlockDisplay newOne, the new block added in the architecture", comments = "Initialize the handlers for the new block in the architecture", returnValue="None" ,revision = 1)
     public void addAction(BlockDisplay newOne){
         newOne.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -355,6 +360,7 @@ public class GUIController {
         });
     }
 
+    @MethodInfo(name = "remove(BlockDisplay newOne)", date = "05/07/18", arguments = "1: BlockDisplay newOne, the block which the user choose to delete", comments = "Delete the block from SourceList", returnValue="None" ,revision = 1)
     public void remove(BlockDisplay newOne){
         int counter_1 = 0;
         for(int i = 0; i < SourceList.size() ;i++){
@@ -392,6 +398,7 @@ public class GUIController {
         reDisplay();
     }
 
+    @MethodInfo(name = "reDisplay()", date = "05/07/18", arguments = "", comments = "Regenerate the architecture based on the SourceList", returnValue="None" ,revision = 1)
     public void reDisplay(){
         int counterPadding = 1;
         int counter_2 = 0;
@@ -422,6 +429,7 @@ public class GUIController {
         Architecture.getChildren().addAll(ResultList);
     }
 
+    @MethodInfo(name = "copyPaste(String newOne, int position)", date = "05/07/18", arguments = "1: String newOne, the block identifier, 2: int position, the position where the block will be moved", comments = "Move the block and is Children in the SourceList", returnValue="None" ,revision = 1)
     public void copyPaste(String newOne, int position){
         int start = 0;
         int end = 0;

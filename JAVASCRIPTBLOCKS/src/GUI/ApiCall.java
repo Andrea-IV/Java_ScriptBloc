@@ -54,7 +54,7 @@ public class ApiCall {
         URL obj = new URL(this.BaseUrl+call);
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-        //add reuqest header
+        //add request header
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         con.setRequestProperty("Accept", "application/json");

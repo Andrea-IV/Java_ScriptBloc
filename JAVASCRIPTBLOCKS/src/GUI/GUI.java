@@ -33,15 +33,20 @@ public class GUI extends Application {
         try {
             List<Class<?>> classes = ClassFinder.find("GUI");
             PrintWriter writer = new PrintWriter("DocGUI.txt", "UTF-8");
-            writer.println("GUI FUNCTION DOCUMENTATION");
+            writer.println("                                   =========================================================");
+            writer.println("                                   ||  SCRIPT::BLOCKS GUI PACKAGE FUNCTION DOCUMENTATION  ||");
+            writer.println("                                   =========================================================");
+            writer.println();
             for(Class name: classes){
                 if(!name.getName().contains("$")) {
-                    writer.println("----------CLASS----------");
-                    writer.println(name.getName());
-                    writer.println("-------------------------");
+                    writer.println("||----------CLASS----------");
+                    writer.println("||     "+name.getName());
+                    writer.println("||-------------------------");
+                    writer.println("||");
                     writeConstructorInFile(GUI.class.getClassLoader().loadClass((name.getName())).getConstructors(), writer);
                     writeFieldInFile(GUI.class.getClassLoader().loadClass((name.getName())).getFields(), writer);
                     writeMethodInFile(GUI.class.getClassLoader().loadClass((name.getName())).getMethods(), writer);
+                    writer.println("||");
                 }
             }
             writer.close();
@@ -59,15 +64,15 @@ public class GUI extends Application {
             if (method.isAnnotationPresent(MethodInfo.class)) {
                 try {
                     MethodInfo methodAnno = method.getAnnotation(MethodInfo.class);
-                    writer.println();
-                    writer.println("    ---------METHOD----------");
-                    writer.println("         "+methodAnno.name());
-                    writer.println("    -------------------------");
-                    writer.println("    -- DATE : "+methodAnno.date());
-                    writer.println("    -- REVISION : "+methodAnno.revision());
-                    writer.println("    -- DESCRIPTION : "+methodAnno.comments());
-                    writer.println("    -- ARGUMENTS : "+methodAnno.arguments());
-                    writer.println("    -- RETURN : "+methodAnno.returnValue());
+                    writer.println("||");
+                    writer.println("||    ---------METHOD----------");
+                    writer.println("||         "+methodAnno.name());
+                    writer.println("||    -------------------------");
+                    writer.println("||    -- DATE : "+methodAnno.date());
+                    writer.println("||    -- REVISION : "+methodAnno.revision());
+                    writer.println("||    -- DESCRIPTION : "+methodAnno.comments());
+                    writer.println("||    -- ARGUMENTS : "+methodAnno.arguments());
+                    writer.println("||    -- RETURN : "+methodAnno.returnValue());
                 } catch (Throwable ex) {
                     ex.printStackTrace();
                 }
@@ -82,15 +87,15 @@ public class GUI extends Application {
             if (method.isAnnotationPresent(MethodInfo.class)) {
                 try {
                     MethodInfo methodAnno = (MethodInfo) method.getAnnotation(MethodInfo.class);
-                    writer.println();
-                    writer.println("    -------CONSTRUCTOR-------");
-                    writer.println("         "+methodAnno.name());
-                    writer.println("    -------------------------");
-                    writer.println("    -- DATE : "+methodAnno.date());
-                    writer.println("    -- REVISION : "+methodAnno.revision());
-                    writer.println("    -- DESCRIPTION : "+methodAnno.comments());
-                    writer.println("    -- ARGUMENTS : "+methodAnno.arguments());
-                    writer.println("    -- RETURN : "+methodAnno.returnValue());
+                    writer.println("||");
+                    writer.println("||    -------CONSTRUCTOR-------");
+                    writer.println("||         "+methodAnno.name());
+                    writer.println("||    -------------------------");
+                    writer.println("||    -- DATE : "+methodAnno.date());
+                    writer.println("||    -- REVISION : "+methodAnno.revision());
+                    writer.println("||    -- DESCRIPTION : "+methodAnno.comments());
+                    writer.println("||    -- ARGUMENTS : "+methodAnno.arguments());
+                    writer.println("||    -- RETURN : "+methodAnno.returnValue());
                 } catch (Throwable ex) {
                     ex.printStackTrace();
                 }
@@ -105,17 +110,18 @@ public class GUI extends Application {
             if (method.isAnnotationPresent(MethodInfo.class)) {
                 try {
                     MethodInfo methodAnno = (MethodInfo) method.getAnnotation(MethodInfo.class);
-                    writer.println();
-                    writer.println("    ----------FIELD----------");
-                    writer.println("         "+methodAnno.name());
-                    writer.println("    -------------------------");
-                    writer.println("    -- DATE : "+methodAnno.date());
-                    writer.println("    -- REVISION : "+methodAnno.revision());
-                    writer.println("    -- DESCRIPTION : "+methodAnno.comments());
+                    writer.println("||");
+                    writer.println("||    ----------FIELD----------");
+                    writer.println("||         "+methodAnno.name());
+                    writer.println("||    -------------------------");
+                    writer.println("||    -- DATE : "+methodAnno.date());
+                    writer.println("||    -- REVISION : "+methodAnno.revision());
+                    writer.println("||    -- DESCRIPTION : "+methodAnno.comments());
                 } catch (Throwable ex) {
                     ex.printStackTrace();
                 }
             }
         }
     }
+
 }
