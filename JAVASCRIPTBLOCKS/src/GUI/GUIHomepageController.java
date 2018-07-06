@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -13,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,10 +24,8 @@ import java.util.ArrayList;
 
 public class GUIHomepageController {
 
+    public static JSONObject export_file;
     public GUIController test;
-
-    @FXML
-    public static Stage stage;
 
     @FXML
     private FlowPane Blockpane;
@@ -39,8 +39,8 @@ public class GUIHomepageController {
     private void loadProject() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
-        fileChooser.setTitle("Open Resource File");
-        File file = fileChooser.showOpenDialog(GUIHomepageController.stage);
+        fileChooser.setTitle("Open SM File");
+        File file = fileChooser.showOpenDialog(GUI.stage);
         if(file != null) {
             try {
                 System.out.println(file.toString());
@@ -57,10 +57,10 @@ public class GUIHomepageController {
                 Parent scene = loader.load();
                 GUIController gc = loader.getController();
                 gc.setArchitecture((JSONArray) ja.get(0));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(scene));
-                stage.setTitle("untitled");
-                stage.show();
+                GUI.stage = new Stage();
+                GUI.stage.setScene(new Scene(scene));
+                GUI.stage.setTitle("untitled");
+                GUI.stage.show();
 
             } catch(JSONException e) {
                 System.out.println(e);
@@ -74,21 +74,37 @@ public class GUIHomepageController {
     @FXML
     private void convertProject() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        File file = fileChooser.showOpenDialog(GUIHomepageController.stage);
+        fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+        fileChooser.setTitle("Open SM File");
+        File file = fileChooser.showOpenDialog(GUI.stage);
         if(file != null) {
-            System.out.println(file.toString());
-        }
+            try {
+                System.out.println(file.toString());
+                String fl = new String(Files.readAllBytes(file.toPath()));
 
-        ApiCall ac = new ApiCall("http://127.0.0.1/");
+                export_file = new JSONObject(fl);
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("export_window.fxml"));
+                Parent scene = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(scene));
+                stage.setTitle("Export file");
+                stage.show();
+            } catch (IOException e) {
+                System.out.println(e);
+            } catch(JSONException e) {
+                System.out.println(e);
+            }
+        }
     }
 
     @FXML
     private void startNewProject() throws IOException {
-        GUIHomepageController.stage = new Stage();
+        GUI.stage = new Stage();
         Parent new_scene = FXMLLoader.load(getClass().getResource("mainWindow2.fxml"));
-        GUIHomepageController.stage.setScene(new Scene(new_scene));
-        GUIHomepageController.stage.setTitle("untitled.sm");
-        GUIHomepageController.stage.show();
+        GUI.stage.setScene(new Scene(new_scene));
+        GUI.stage.setTitle("untitled.sm");
+        GUI.stage.show();
     }
 }

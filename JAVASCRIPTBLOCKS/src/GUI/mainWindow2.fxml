@@ -30,7 +30,15 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="menu_open" mnemonicParsing="false" text="Open" />
+                  <MenuItem fx:id="menu_save" mnemonicParsing="false" onAction="#saveFile" text="Save" />
+                  <Menu fx:id="menu_export" mnemonicParsing="false" text="Export">
+                    <items>
+                      <MenuItem fx:id="menu_export_bash" mnemonicParsing="false" text="Bash" />
+                        <MenuItem fx:id="menu_export_batch" mnemonicParsing="false" text="Batch" />
+                    </items>
+                  </Menu>
+                  <MenuItem fx:id="menu_close" mnemonicParsing="false" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">

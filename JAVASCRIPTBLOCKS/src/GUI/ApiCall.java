@@ -1,10 +1,7 @@
 package GUI;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,17 +47,17 @@ public class ApiCall {
 
     public String ApiPostResponse(String call, String urlParameters) throws MalformedURLException, IOException {
         URL obj = new URL(this.BaseUrl+call);
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        //add reuqest header
+        //add request header
         con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        con.setRequestProperty("Accept", "application/json");
+//        con.setRequestProperty("Content-Type", "application/x-www-form-urle/ncoded");
+        con.setRequestProperty("Content-Type", "application/json");
 
         // Send post request
         con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(urlParameters);
+        OutputStream  wr = con.getOutputStream();
+        wr.write(urlParameters.getBytes("UTF-8"));
         wr.flush();
         wr.close();
 
@@ -69,18 +66,15 @@ public class ApiCall {
         System.out.println("Post parameters : " + urlParameters);
         System.out.println("Response Code : " + responseCode);
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
 
         while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+            response.append(inputLine + "\n");
         }
         in.close();
 
-        //print result
-        System.out.println(response.toString());
         return response.toString();
     }
 }

@@ -1,10 +1,13 @@
 package GUI;
+
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -14,14 +17,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.xml.transform.Source;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
+
 
 public class GUIController {
 
+    private ArrayList<BlockDisplay> array_bd;
+
+    @FXML
+    private MenuItem menu_save;
     @FXML
     private GridPane Blockpane;
     @FXML
@@ -35,9 +49,12 @@ public class GUIController {
 
     private ArrayList<BlockDisplay> SourceList = new ArrayList<BlockDisplay>();
     private BlockDisplay tempBlock;
+    private int cnt = 0;
 
     @FXML
     protected void initialize() {
+        array_bd = new ArrayList<BlockDisplay>();
+
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         BlockDisplay source;
         try{
@@ -56,7 +73,9 @@ public class GUIController {
 
                 if(Obj.length() != 0){
                     for(int j = 0; j < Obj.length(); j++){
-                        source.block.args.add(new Arguments((int)Obj.getJSONObject(j).get("id"), (String)Obj.getJSONObject(j).get("name"), (String)Obj.getJSONObject(j).get("keyValue"), (String)Obj.getJSONObject(j).get("description")));
+                        String temp = (String)Obj.getJSONObject(j).get("keyValue");
+                        String key = temp.substring(1, temp.length() - 1);
+                        source.block.args.add(new Arguments((int)Obj.getJSONObject(j).get("id"), (String)Obj.getJSONObject(j).get("name"), key, (String)Obj.getJSONObject(j).get("description")));
                     }
                 }
                 blockLabelInit(source);
@@ -67,6 +86,8 @@ public class GUIController {
                     Blockpane.add(source.getBlockLabel(),1,counter-1);
                     counter++;
                 }
+
+                array_bd.add(source);
             }
         }catch(Exception e){
             System.out.println(e);
@@ -76,6 +97,8 @@ public class GUIController {
         target.setPrefWidth(535);
         target.setPrefWidth(438);
         Architecture.getChildren().addAll(target);
+
+        menu_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
     }
 
     private void refreshLabel(BlockDisplay selected, String position){
@@ -90,7 +113,7 @@ public class GUIController {
         selected.getBlockLabel().setTextFill(Color.BLACK);
 
         for (BlockDisplay temp : SourceList) {
-            System.out.println(temp.getType());
+//            System.out.println(temp.getType());
             if(temp.getType() != 3 && temp.getType() != 2) {
                 ResultList.add(targetLabelCreation(counter_2));
             }
@@ -319,34 +342,135 @@ public class GUIController {
         });
     }
 
+    private BlockDisplay findBlockById(int id) {
+//        (Blockpane.getChildren()).forEach((bd) -> {
+//            System.out.println(bd.getClass().getName());
+//        });
+
+        for(BlockDisplay bd : array_bd) {
+            if(bd.block.getId() == id) {
+//                System.out.println(bd.block.getName());
+                return bd;
+            }
+        }
+
+        return null;
+    }
+
     public void setArchitecture (JSONArray json) throws JSONException {
+        int pos_object;
+
         for(int i = 0; i < json.length(); i++) {
             JSONObject jso = json.getJSONObject(i);
-//            System.out.println(jso.getJSONObject("arguments"));
             Iterator keys = jso.keys();
             int j = 0;
+            int arg = 1;
+            int id = (int)jso.get("id");
+            BlockDisplay bd = findBlockById(id);
 
-            System.out.println("id = " + ((JSONObject) jso).get("id"));
+            refreshLabel(bd, ""+cnt);
+            if(bd.getType() == 1) cnt+=2;
+            else cnt++;
+
+
+            for(pos_object = SourceList.size() - 1; pos_object >= 0; pos_object--) {
+                if(SourceList.get(pos_object).getType() == 1 || SourceList.get(pos_object).getType() == 0) {
+                    break;
+                }
+            }
+
 
             while(keys.hasNext()) {
                 String key = (String) keys.next();
                 if(jso.get(key) instanceof JSONObject) {
                     JSONObject value = (JSONObject) jso.get(key);
-                    while(value.has("#blocks"+j)) {
+                    Iterator testo= value.keys();
+                    while(testo.hasNext()) {
+                        String k = (String) testo.next();
+                        if(value.get(k) instanceof JSONArray) {
+                            setArchitecture(value.getJSONArray(k));
+                            cnt+=2;
+                        } else {
 
-//                        String component = v.getJSONArray("#blocks" + j).toString();
-//                        System.out.println("\t"+component);
-                        setArchitecture(value.getJSONArray("#blocks" + j));
-                        j++;
+                            for(int y = 0; y < SourceList.get(pos_object).block.args.size(); y++) {
+                                if(SourceList.get(pos_object).block.args.get(y).getKey().equals(k)) {
+                                    SourceList.get(pos_object).block.args.get(y).setValue(value.get(k).toString());
+                                }
+                            }
+                        }
                     }
-                } else {
-                    break;
                 }
             }
-            // PLACER LES ELEMENTS DANS ARCHITECTURE ET TOUT
         }
-
-        Architecture.getChildren().add(new Label("test"));
     }
 
+
+//    private JSONObject buildJSON(JSONObject jo, String keyName) {
+//
+//
+//    }
+
+    @FXML
+    private void saveFile() {
+        System.out.println("saveFile");
+        JSONObject jo = new JSONObject();
+        Stack stack = new Stack();
+        try {
+//            jo.append("blocks", new JSONArray());
+            for(int x = 0; x < SourceList.size(); x++) {
+                if(SourceList.get(x).block != null) {
+                    JSONObject args = new JSONObject();
+                    JSONObject obj = new JSONObject();
+                    switch(SourceList.get(x).getType()) {
+                        case 0:
+                            args.put("id", SourceList.get(x).block.getId());
+                            SourceList.get(x).block.args.forEach(el -> {
+                                try {
+                                    obj.put(el.getKey(), el.getValue());
+                                } catch(JSONException e) {
+                                    System.out.println(e);
+                                }
+                            });
+                            break;
+
+                        case 1:
+                            stack.push(1);
+                            break;
+                    }
+                    args.put("arguments", obj);
+                    jo.append("blocks", args);
+//                    JSONObject obj = new JSONObject(3);
+//                    obj.put("id", SourceList.get(x).block.getId());
+//                    JSONObject args = new JSONObject(3);
+//                    SourceList.get(x).block.args.forEach((el) -> {
+//                        try {
+//                            args.put(el.getKey(), el.getValue());
+//                        } catch (JSONException e) {
+//                            System.out.println(e);
+//                        }
+//                    });
+//                    obj.put("arguments", args);
+//                    jo.append("blocks", obj);
+//                    System.out.println(SourceList.get(x).block.getName());
+                }
+            }
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+            fileChooser.setTitle("Save file");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SM files (*.sm)", "*.sm");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showSaveDialog(GUI.stage);
+            try {
+                PrintWriter writer = new PrintWriter(file.toString(), "UTF-8");
+                writer.println(jo);
+                writer.close();
+            } catch (FileNotFoundException e) {
+                System.out.println(e);
+            } catch (UnsupportedEncodingException e) {
+                System.out.println(e);
+            }
+        } catch(JSONException e) {
+            System.out.println(e);
+        }
+    }
 }

@@ -14,12 +14,13 @@ import java.net.URL;
 
 public class GUI extends Application {
 
-
+    public static Stage stage;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage_) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("openingWindow.fxml"));
         Scene scene = new Scene(root);
+        stage = stage_;
         stage.setTitle("Script::Blocks");
         stage.setScene(scene);
         stage.show();
