@@ -43,4 +43,14 @@ public class BlockDisplay {
     public void setType(int type) {
         this.type = type;
     }
+
+    public String toString() {
+        String start = blockLabel.toString() + " " + type + "\n";
+        String next = "";
+        for(int i = 0; i < block.args.size(); i++) {
+            next += block.args.get(i).getKey() + block.args.get(i).getValue() + "\n";
+        }
+
+        return start + next;
+    }
 }

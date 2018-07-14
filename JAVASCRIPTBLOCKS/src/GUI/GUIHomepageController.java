@@ -63,7 +63,7 @@ public class GUIHomepageController {
                 GUI.stage.show();
 
             } catch(JSONException e) {
-                System.out.println(e);
+                System.out.println("load project " + e);
             } catch (IOException e) {
                 System.out.println(e);
             }

@@ -6,6 +6,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -21,6 +25,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -435,13 +441,11 @@ public class GUIController {
             if(bd.getType() == 1) cnt+=2;
             else cnt++;
 
-
             for(pos_object = SourceList.size() - 1; pos_object >= 0; pos_object--) {
                 if(SourceList.get(pos_object).getType() == 1 || SourceList.get(pos_object).getType() == 0) {
                     break;
                 }
             }
-
 
             while(keys.hasNext()) {
                 String key = (String) keys.next();
@@ -467,73 +471,99 @@ public class GUIController {
         }
     }
 
+    private JSONObject buildJSON(ArrayList<BlockDisplay> bdl, boolean isRoot) throws JSONException {
+        System.out.println("BuilJSON");
+        JSONObject jo = new JSONObject();
+        JSONObject obj = new JSONObject();
+        JSONObject args;
 
-//    private JSONObject buildJSON(JSONObject jo, String keyName) {
-//
-//
-//    }
+        for(int x = 0; x < bdl.size(); x++) {
+            obj = new JSONObject();
+            args = new JSONObject();
+
+            if(bdl.get(x).getType() == 0 || bdl.get(x).getType() == 1) {
+                obj.put("id", bdl.get(x).block.getId());
+                for(int y = 0; y < bdl.get(x).block.args.size(); y++) {
+                    args.put(bdl.get(x).block.args.get(y).getKey(), bdl.get(x).block.args.get(y).getValue());
+                }
+            }
+
+            if(bdl.get(x).getType() == 1) {
+                int block_counter =  0;
+                int cnt = 0;
+                ArrayList<BlockDisplay> sl = new ArrayList<BlockDisplay>();
+                x++;
+                while(bdl.get(x).getType() != 2) {
+
+                    sl.clear();
+                    if(bdl.get(x).getType() == 3) {
+                        cnt = 1;
+                        x++;
+                        while(true) {
+                            if(bdl.get(x).getType() == 3) cnt++;
+                            if(bdl.get(x).getType() == 4) cnt--;
+                            if(cnt == 0) {
+                                break;
+                            }
+
+                            sl.add(bdl.get(x));
+                            x++;
+                        }
+
+                        for(int a = 0; a < sl.size(); a++) {
+                            System.out.println("a = " + sl.get(a).blockLabel);
+                        }
+                        if(!sl.isEmpty()) args.append("#blocks" + block_counter, buildJSON(sl, false));
+                        else args.append("#blocks" + block_counter, new JSONObject().put("null",  ""));
+                        block_counter++;
+                    }
+
+                    x++;
+                }
+            }
+
+            obj.put("arguments", args);
+            if(isRoot) jo.append("blocks", obj);
+        }
+
+        if(isRoot)
+            return jo;
+        else return obj;
+    }
 
     @FXML
     private void saveFile() {
         System.out.println("saveFile");
         JSONObject jo = new JSONObject();
-        Stack stack = new Stack();
-        try {
-//            jo.append("blocks", new JSONArray());
-            for(int x = 0; x < SourceList.size(); x++) {
-                if(SourceList.get(x).block != null) {
-                    JSONObject args = new JSONObject();
-                    JSONObject obj = new JSONObject();
-                    switch(SourceList.get(x).getType()) {
-                        case 0:
-                            args.put("id", SourceList.get(x).block.getId());
-                            SourceList.get(x).block.args.forEach(el -> {
-                                try {
-                                    obj.put(el.getKey(), el.getValue());
-                                } catch(JSONException e) {
-                                    System.out.println(e);
-                                }
-                            });
-                            break;
+//        JSONObject obj = new JSONObject();
+//        JSONObject args = new JSONObject();
 
-                        case 1:
-                            stack.push(1);
-                            break;
-                    }
-                    args.put("arguments", obj);
-                    jo.append("blocks", args);
-//                    JSONObject obj = new JSONObject(3);
-//                    obj.put("id", SourceList.get(x).block.getId());
-//                    JSONObject args = new JSONObject(3);
-//                    SourceList.get(x).block.args.forEach((el) -> {
-//                        try {
-//                            args.put(el.getKey(), el.getValue());
-//                        } catch (JSONException e) {
-//                            System.out.println(e);
-//                        }
-//                    });
-//                    obj.put("arguments", args);
-//                    jo.append("blocks", obj);
-//                    System.out.println(SourceList.get(x).block.getName());
-                }
-            }
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
-            fileChooser.setTitle("Save file");
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SM files (*.sm)", "*.sm");
-            fileChooser.getExtensionFilters().add(extFilter);
-            File file = fileChooser.showSaveDialog(GUI.stage);
+
+        try {
+            jo =  buildJSON(SourceList, true);
+            System.out.println(jo);
+        } catch(JSONException e) {
+            System.out.println("erreur builder " + e);
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+        fileChooser.setTitle("Save file");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SM files (*.sm)", "*.sm");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(GUI.stage);
+        if(file != null) {
             try {
                 PrintWriter writer = new PrintWriter(file.toString(), "UTF-8");
-                writer.println(jo);
+                writer.println(jo.toString(4));
                 writer.close();
             } catch (FileNotFoundException e) {
                 System.out.println(e);
             } catch (UnsupportedEncodingException e) {
                 System.out.println(e);
+            } catch (JSONException e) {
+                System.out.println(e);
             }
-        } catch(JSONException e) {
-            System.out.println(e);
         }
     }
 
