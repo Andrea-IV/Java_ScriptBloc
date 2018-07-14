@@ -15,11 +15,14 @@ import javafx.stage.FileChooser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import plugins.*;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
 
 public class GUIController {
@@ -38,6 +41,17 @@ public class GUIController {
     private Label blockTitle;
     @FXML
     private GridPane argBox;
+
+    @FXML
+    private Menu pluginMenu;
+
+    @FXML
+    private MenuItem loadPlugins;
+
+    public Plugin[] plugins = null;
+
+    public ArrayList<Path> filesjar = new ArrayList<Path>();
+    public ArrayList pluginsLoad = new ArrayList();
 
     private ArrayList<BlockDisplay> SourceList = new ArrayList<BlockDisplay>();
     private BlockDisplay tempBlock;
@@ -84,6 +98,13 @@ public class GUIController {
         }catch(Exception e){
             System.out.println(e);
         }
+
+        loadAutoPlugins();
+        loadPlugins.addEventHandler(javafx.event.ActionEvent.ACTION, event -> {
+            pluginMenu.getItems().remove(1, pluginMenu.getItems().size());
+            this.filesjar.clear();
+            loadAutoPlugins();
+        });
 
         Label target = targetLabelCreation(0);
         target.setPrefHeight(575);
@@ -644,5 +665,54 @@ public class GUIController {
             }
         }
         reDisplay();
+    }
+
+    public void loadAutoPlugins(){
+        try {
+            plugins = PluginLoader.initAsPlugin(PluginLoader.loadDirectoryC("toLoad", "config.cfg"));
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException f) {
+            f.printStackTrace();
+        } catch (ClassNotFoundException g) {
+            g.printStackTrace();
+        } catch (IOException h) {
+            h.printStackTrace();
+        }
+
+        try{
+            Stream<Path> paths = Files.walk(Paths.get("toLoad"));
+            int[] idx = { 0 };
+            //paths.forEach(file -> {
+
+            Iterable<Path> iterable = paths::iterator;
+            for(Path file : iterable){
+                if (Files.isRegularFile(file)) {
+                    Path plugPath = file.toAbsolutePath();
+                    this.filesjar.add(plugPath);
+                    MenuItem np = new MenuItem();
+                    np.setText(plugPath.getFileName().toString().substring(0, plugPath.getFileName().toString().indexOf(".")));
+                    np.setId(plugPath.getFileName().toString().substring(0, plugPath.getFileName().toString().indexOf(".")));
+                    System.out.println(np.getId());
+
+                    np.setOnAction(event -> {
+                        runPlugin(plugins[idx[0]++]);
+                    });
+                    pluginMenu.getItems().add(np);
+                }
+
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void runPlugin(Plugin plugin){
+
+        plugin.run();
+        plugin.close();
+
     }
 }

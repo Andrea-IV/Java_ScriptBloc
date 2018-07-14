@@ -1,177 +1,511 @@
-GUI FUNCTION DOCUMENTATION
-----------CLASS----------
-GUI.ApiCall
--------------------------
+                                   =========================================================
+                                   ||  SCRIPT::BLOCKS GUI PACKAGE FUNCTION DOCUMENTATION  ||
+                                   =========================================================
 
-    -------CONSTRUCTOR-------
-         ApiCall(String baseUrl)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Constructor of The APICall needs the base url
-    -- ARGUMENTS : 1: String baseUrl, URL of the API
-    -- RETURN : None
-
-    ---------METHOD----------
-         ApiGetResponse(String call, String urlParameters)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Api call with post arguments
-    -- ARGUMENTS : 1: String call, the arguments for the API call, 2: String urlParameters, the post parameters for the Call
-    -- RETURN : None
-
-    ---------METHOD----------
-         ApiGetResponse(String call)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Api call with get arguments
-    -- ARGUMENTS : 1: String call, the arguments for the API call
-    -- RETURN : None
-----------CLASS----------
-GUI.Arguments
--------------------------
-----------CLASS----------
-GUI.Block
--------------------------
-----------CLASS----------
-GUI.BlockDisplay
--------------------------
-
-    -------CONSTRUCTOR-------
-         BlockDisplay(Label label, int type)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Basic Constructor
-    -- ARGUMENTS : 1: Label label, the label that will be put in the current BlockDisplay, 2: int type, the type that will be put in the current BlockDisplay
-    -- RETURN : None
-
-    -------CONSTRUCTOR-------
-         BlockDisplay(BlockDisplay another)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Constructor to make a Copy
-    -- ARGUMENTS : 1: BlockDisplay another, the BlockDisplay to copy in the current BlockDisplay
-    -- RETURN : None
-
-    ----------FIELD----------
-         Label blockLabel
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : The Label used for the archicteture
-
-    ----------FIELD----------
-         Block block
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : The block contained by the display block
-
-    ---------METHOD----------
-         getType()
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Get the Type
-    -- ARGUMENTS : None
-    -- RETURN : int, the type of the class
-
-    ---------METHOD----------
-         setType()
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Type Setter
-    -- ARGUMENTS : 1: int Type, The new type to put in the BlockDisplay
-    -- RETURN : void
-
-    ---------METHOD----------
-         setBlockLabel()
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Label Setter
-    -- ARGUMENTS : 1: Label Blocklabel, The new label to put in the BlockDisplay
-    -- RETURN : void
-
-    ---------METHOD----------
-         getBlockLabel()
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Get the BlockLabel
-    -- ARGUMENTS : None
-    -- RETURN : Label, the blocklabel of the class
-----------CLASS----------
-GUI.ClassFinder
--------------------------
-
-    ---------METHOD----------
-         find(String scannedPackage)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Get the classes inside a package
-    -- ARGUMENTS : 1: String scannedPackage, The name of the package to get the classes
-    -- RETURN : List<Class<?>>
-----------CLASS----------
-GUI.GUI
--------------------------
-
-    ---------METHOD----------
-         main(String[] args)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : The Main, launch start & parse annotations
-    -- ARGUMENTS : 1: String[] args, The rgs
-    -- RETURN : None
-
-    ---------METHOD----------
-         start(Stage stage)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Init the Base Window
-    -- ARGUMENTS : 1: Stage stage, The stage to be set
-    -- RETURN : None
-
-    ---------METHOD----------
-         writeConstructorInFile(Constructor[] methodArray, PrintWriter writer)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Loop on all the constructors to print annotation in the doc
-    -- ARGUMENTS : 1: Constructor[] methodArray, list of constructor to write the doc, 2: PrintWriter writer, printer to write in the doc field
-    -- RETURN : None
-
-    ---------METHOD----------
-         writeFieldInFile(Field[] methodArray, PrintWriter writer)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
-    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
-    -- RETURN : None
-
-    ---------METHOD----------
-         writeMethodInFile(Method[] methodArray, PrintWriter writer)
-    -------------------------
-    -- DATE : 05/07/18
-    -- REVISION : 1
-    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
-    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
-    -- RETURN : None
-----------CLASS----------
-GUI.GUIController
--------------------------
-----------CLASS----------
-GUI.GUIHomepageController
--------------------------
-----------CLASS----------
-GUI.MethodInfo
--------------------------
+||----------CLASS----------
+||     GUI.ApiCall
+||-------------------------
+||
+||
+||    -------CONSTRUCTOR-------
+||         ApiCall(String baseUrl)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Constructor of The APICall needs the base url
+||    -- ARGUMENTS : 1: String baseUrl, URL of the API
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         ApiGetResponse(String call)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Api call with get arguments
+||    -- ARGUMENTS : 1: String call, the arguments for the API call
+||    -- RETURN : String, the JSON result
+||
+||    ---------METHOD----------
+||         ApiPostResponse(String call, String urlParameters)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Api call with post arguments
+||    -- ARGUMENTS : 1: String call, the arguments for the API call, 2: String urlParameters, the post parameters for the Call
+||    -- RETURN : String, the JSON result
+||
+||----------CLASS----------
+||     GUI.Arguments
+||-------------------------
+||
+||
+||    -------CONSTRUCTOR-------
+||         Arguments(int id, String name, String key, String description)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The basic constructor without value initialisation
+||    -- ARGUMENTS : 1: int id, id of the block, 2: String name, name of the block, 3: String key, key of the block , 4: String description, information about the purpose of the block
+||    -- RETURN : 
+||
+||    -------CONSTRUCTOR-------
+||         Arguments(int id, String name, String key, String description, String Value)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The complete constructor
+||    -- ARGUMENTS : 1: int id, id of the block, 2: String name, name of the block, 3: String key, key of the block , 4: String description, information about the purpose of the block, 5: String Value, value put in the argument
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         Object clone()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Permit the clone of the args when a block is copied
+||    -- ARGUMENTS : None
+||    -- RETURN : Object, the Clone
+||
+||    ---------METHOD----------
+||         getName()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the name parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String name, name of the object
+||
+||    ---------METHOD----------
+||         getValue()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the value parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String value, value of the object
+||
+||    ---------METHOD----------
+||         getKey()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the key parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String key, key of the object
+||
+||    ---------METHOD----------
+||         setName(String name)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the name parameter
+||    -- ARGUMENTS : 1: String name, the new name for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         getId()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the ID parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : int id, id of the object
+||
+||    ---------METHOD----------
+||         setValue(String value)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the value parameter
+||    -- ARGUMENTS : 1: String value, the new value for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         setKey(String key)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the key parameter
+||    -- ARGUMENTS : 1: String key, the new key for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         setDescription(String Description)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the Description parameter
+||    -- ARGUMENTS : 1: String Description, the new Description for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         getDescription()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the description parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String description, description of the object
+||
+||    ---------METHOD----------
+||         setId(int id)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the ID parameter
+||    -- ARGUMENTS : 1: int id, the new id for the object
+||    -- RETURN : 
+||
+||----------CLASS----------
+||     GUI.Block
+||-------------------------
+||
+||
+||    -------CONSTRUCTOR-------
+||         Block(Block another)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Copy Constructor
+||    -- ARGUMENTS : 1: Block another, the block from which you want to take the values
+||    -- RETURN : 
+||
+||    -------CONSTRUCTOR-------
+||         Block(int id, String name, String description, String type, ArrayList<Arguments> args)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The complete constructor
+||    -- ARGUMENTS : 1: int id, id of the block, 2: String name, name of the block, 3: String description, information about the purpose of the block, 4: String type, type of the block, 5: ArrayList<Arguments> args, The array list of arguments that are used by the block
+||    -- RETURN : 
+||
+||    -------CONSTRUCTOR-------
+||         Block(int id, String name, String description, String type)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The basic constructor without arguments initialisation
+||    -- ARGUMENTS : 1: int id, id of the block, 2: String name, name of the block, 3: String description, information about the purpose of the block, 4: String type, type of the block
+||    -- RETURN : 
+||
+||    ----------FIELD----------
+||         ArrayList<Arguments> args
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The args of the block, array list of arguments can be empty
+||
+||    ---------METHOD----------
+||         getName()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the name parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String name, name of the object
+||
+||    ---------METHOD----------
+||         setName(String name)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the name parameter
+||    -- ARGUMENTS : 1: String name, the new name for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         getId()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the ID parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : int id, id of the object
+||
+||    ---------METHOD----------
+||         getType()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the type parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String type, type of the object
+||
+||    ---------METHOD----------
+||         setDescription(String Description)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the Description parameter
+||    -- ARGUMENTS : 1: String Description, the new Description for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         getArgs()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the args parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : ArrayList<Arguments> args, args of the object
+||
+||    ---------METHOD----------
+||         setArgs(ArrayList<Arguments> args)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the args parameter
+||    -- ARGUMENTS : 1: ArrayList<Arguments> args, the new args for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         setType(String type)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the type parameter
+||    -- ARGUMENTS : 1: String type, the new type for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         getDescription()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the description parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String description, description of the object
+||
+||    ---------METHOD----------
+||         setId(int id)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the ID parameter
+||    -- ARGUMENTS : 1: int id, the new id for the object
+||    -- RETURN : 
+||
+||----------CLASS----------
+||     GUI.BlockDisplay
+||-------------------------
+||
+||
+||    -------CONSTRUCTOR-------
+||         BlockDisplay(Label label, int type)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Basic Constructor
+||    -- ARGUMENTS : 1: Label label, the label that will be put in the current BlockDisplay, 2: int type, the type that will be put in the current BlockDisplay
+||    -- RETURN : None
+||
+||    -------CONSTRUCTOR-------
+||         BlockDisplay(BlockDisplay another)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Constructor to make a Copy
+||    -- ARGUMENTS : 1: BlockDisplay another, the BlockDisplay to copy in the current BlockDisplay
+||    -- RETURN : None
+||
+||    ----------FIELD----------
+||         Label blockLabel
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The Label used for the archicteture
+||
+||    ----------FIELD----------
+||         Block block
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The block contained by the display block
+||
+||    ---------METHOD----------
+||         getType()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Get the Type
+||    -- ARGUMENTS : None
+||    -- RETURN : int, the type of the class
+||
+||    ---------METHOD----------
+||         setType()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Type Setter
+||    -- ARGUMENTS : 1: int Type, The new type to put in the BlockDisplay
+||    -- RETURN : void
+||
+||    ---------METHOD----------
+||         getBlockLabel()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Get the BlockLabel
+||    -- ARGUMENTS : None
+||    -- RETURN : Label, the blocklabel of the class
+||
+||    ---------METHOD----------
+||         setBlockLabel()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Label Setter
+||    -- ARGUMENTS : 1: Label Blocklabel, The new label to put in the BlockDisplay
+||    -- RETURN : void
+||
+||----------CLASS----------
+||     GUI.ClassFinder
+||-------------------------
+||
+||
+||    ---------METHOD----------
+||         find(String scannedPackage)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Get the classes inside a package
+||    -- ARGUMENTS : 1: String scannedPackage, The name of the package to get the classes
+||    -- RETURN : List<Class<?>>
+||
+||----------CLASS----------
+||     GUI.GUI
+||-------------------------
+||
+||
+||    ---------METHOD----------
+||         main(String[] args)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : The Main, launch start & parse annotations
+||    -- ARGUMENTS : 1: String[] args, The rgs
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         start(Stage stage)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Init the Base Window
+||    -- ARGUMENTS : 1: Stage stage, The stage to be set
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         writeConstructorInFile(Constructor[] methodArray, PrintWriter writer)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Loop on all the constructors to print annotation in the doc
+||    -- ARGUMENTS : 1: Constructor[] methodArray, list of constructor to write the doc, 2: PrintWriter writer, printer to write in the doc field
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         writeMethodInFile(Method[] methodArray, PrintWriter writer)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
+||    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         writeFieldInFile(Field[] methodArray, PrintWriter writer)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
+||    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
+||    -- RETURN : None
+||
+||----------CLASS----------
+||     GUI.GUIController
+||-------------------------
+||
+||
+||    ---------METHOD----------
+||         remove(BlockDisplay newOne)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Delete the block from SourceList
+||    -- ARGUMENTS : 1: BlockDisplay newOne, the block which the user choose to delete
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         initialize()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Function called on the opening of the window, initialize the component, call the BDD to get the blocks
+||    -- ARGUMENTS : None
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         copyPaste(String newOne, int position)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Move the block and is Children in the SourceList
+||    -- ARGUMENTS : 1: String newOne, the block identifier, 2: int position, the position where the block will be moved
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         refreshLabel(BlockDisplay selected, String position)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : used to display the architecture when a block is added or when a script is loaded
+||    -- ARGUMENTS : 1: BlockDisplay selected, the block move on a target in the architecture, 2: String position, the position sent by the target
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         blockLabelInit(BlockDisplay source)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Initialize the BlockDisplay handlers
+||    -- ARGUMENTS : 1: BlockDisplay source, the block on the left panel used to create the architecture
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         addAction(BlockDisplay newOne)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Initialize the handlers for the new block in the architecture
+||    -- ARGUMENTS : 1: BlockDisplay newOne, the new block added in the architecture
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         targetLabelCreation(Integer number)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Initialize a Label that will be used as a target for any movement in the architecture
+||    -- ARGUMENTS : 1: Integer number, the position of the target block
+||    -- RETURN : Label target, the label initialized with all the handlers
+||
+||    ---------METHOD----------
+||         reDisplay()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Regenerate the architecture based on the SourceList
+||    -- ARGUMENTS : 
+||    -- RETURN : None
+||
+||----------CLASS----------
+||     GUI.GUIHomepageController
+||-------------------------
+||
+||
+||----------CLASS----------
+||     GUI.MethodInfo
+||-------------------------
+||
+||
