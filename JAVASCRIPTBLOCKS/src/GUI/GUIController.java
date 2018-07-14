@@ -86,8 +86,8 @@ public class GUIController {
         }
 
         Label target = targetLabelCreation(0);
-        target.setPrefHeight(535);
-        target.setPrefWidth(438);
+        target.setPrefHeight(575);
+        target.setPrefWidth(477);
         Architecture.getChildren().addAll(target);
 
         menu_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
@@ -189,17 +189,19 @@ public class GUIController {
             SourceList.add(Integer.parseInt(position)+counterContained, endNew);
         }
         Label last = targetLabelCreation(counter_2);
-        last.setPrefHeight(535);
+        last.setPrefHeight(575);
+        last.setPrefWidth(477);
         ResultList.add(last);
 
         Architecture.getChildren().clear();
         Architecture.getChildren().addAll(ResultList);
+        System.out.println(Architecture.getHeight());
     }
 
     @MethodInfo(name = "targetLabelCreation(Integer number)", date = "05/07/18", arguments = "1: Integer number, the position of the target block", comments = "Initialize a Label that will be used as a target for any movement in the architecture", returnValue="Label target, the label initialized with all the handlers" ,revision = 1)
     public Label targetLabelCreation(Integer number){
         Label target = new Label(number.toString());
-        target.setPrefWidth(438);
+        target.setPrefWidth(477);
         target.setMinHeight(10);
         target.setFont(new Font(0));
         target.setOnDragOver(new EventHandler <DragEvent>() {

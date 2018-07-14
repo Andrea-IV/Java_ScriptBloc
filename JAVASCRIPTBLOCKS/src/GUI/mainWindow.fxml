@@ -3,234 +3,78 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane id="BaseBorderPane" maxHeight="600.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <MenuBar prefWidth="656.0" BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <left>
-      <FlowPane prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="40.0" prefWidth="200.0">
-               <children>
-                  <JFXTextField focusColor="#a0a2ab" layoutX="33.0" layoutY="8.0" promptText="Search Bar" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-               </children>
-            </AnchorPane>
-            <BorderPane prefHeight="521.0" prefWidth="200.0">
-               <left>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2D3447;" BorderPane.alignment="CENTER" />
-               </left>
-               <right>
-                  <ScrollBar orientation="VERTICAL" stylesheets="@style.css" BorderPane.alignment="CENTER" />
-               </right>
-            </BorderPane>
-         </children>
-         <padding>
-            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </FlowPane>
-   </left>
-   <right>
-      <VBox prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-         <children>
-            <BorderPane prefHeight="101.0" prefWidth="273.0" style="-fx-background-color: #2D3447;">
-               <center>
-                  <Label text="Nom de Block" textFill="#a0a2ab" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </center>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <bottom>
-                  <AnchorPane prefHeight="7.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutX="10.0" layoutY="10.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Untitled Tab 2">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
                      <children>
-                        <Separator layoutX="91.0" layoutY="6.0" prefHeight="17.0" prefWidth="108.0">
+                        <Label layoutX="83.0" layoutY="63.0" text="Log In" textFill="#2196f3">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
                            <effect>
-                              <BoxBlur height="0.0" width="181.07" />
+                              <Glow level="1.0" />
+                           </effect>
+                        </Label>
+                        <JFXTextField focusColor="#10212e" layoutX="83.0" layoutY="131.0" promptText="Username" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+                        <JFXTextField layoutX="83.0" layoutY="169.0" promptText="Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+                        <JFXButton layoutX="166.0" layoutY="218.0" style="-fx-background-color: #2196f3;" text="Log In" textFill="WHITE" />
+                        <Separator layoutX="247.0" layoutY="177.0" prefHeight="17.0" prefWidth="107.0" rotate="90.0">
+                           <effect>
+                              <BoxBlur height="0.0" width="178.04" />
                            </effect>
                         </Separator>
+                        <Label layoutX="382.0" layoutY="60.0" text="Sign In" textFill="#2196f3">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                           <effect>
+                              <Glow level="1.0" />
+                           </effect>
+                        </Label>
+                        <JFXTextField focusColor="#2196f3" layoutX="385.0" layoutY="128.0" promptText="Username" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+                        <JFXTextField layoutX="385.0" layoutY="166.0" promptText="Mail" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+                        <JFXButton layoutX="472.0" layoutY="286.0" style="-fx-background-color: #2196f3;" text="Sign In" textFill="WHITE" />
+                        <JFXTextField focusColor="#2196f3" layoutX="385.0" layoutY="201.0" promptText="Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+                        <JFXTextField layoutX="385.0" layoutY="239.0" promptText="Confirm Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
                      </children>
                   </AnchorPane>
-               </bottom>
-            </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <right>
-                  <ScrollBar orientation="VERTICAL" stylesheets="@style.css" BorderPane.alignment="CENTER" />
-               </right>
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-               <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #2D3447;" BorderPane.alignment="CENTER">
+               </content>
+            </Tab>
+            <Tab text="Untitled Tab 3">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
                      <children>
-                        <Label text="Description" textFill="#a0a2ab">
+                        <Label layoutX="165.0" layoutY="66.0" text="Upload" textFill="#2196f3">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="28.0" />
                            </font>
+                           <effect>
+                              <Glow level="1.0" />
+                           </effect>
                         </Label>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Separator layoutX="65.0" layoutY="11.0" prefHeight="13.0" prefWidth="129.0">
-                                 <padding>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </padding>
-                                 <effect>
-                                    <BoxBlur height="0.0" width="181.07" />
-                                 </effect>
-                              </Separator>
-                           </children>
-                        </AnchorPane>
-                        <Text fill="#a0a2ab" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, &#10;consectetur adipiscing elit, &#10;sed do eiusmod tempor incididunt &#10;ut labore et dolore magna aliqua. &#10;Ut enim ad minim veniam, quis nostrud&#10;" />
+                        <JFXTextField focusColor="#10212e" layoutX="165.0" layoutY="118.0" prefHeight="25.0" prefWidth="270.0" promptText="Script Name" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+                        <JFXButton layoutX="380.0" layoutY="280.0" style="-fx-background-color: #2196f3;" text="Upload" textFill="WHITE" />
+                        <JFXButton layoutX="490.0" layoutY="14.0" prefHeight="41.0" prefWidth="96.0" style="-fx-background-color: #16182C;" text="Disconnect" textFill="WHITE" />
+                        <JFXTextArea focusColor="#10212e" layoutX="165.0" layoutY="167.0" prefHeight="93.0" prefWidth="268.0" promptText="Script Description" style="-fx-background-color: white;" unFocusColor="#a0a2ab" />
                      </children>
-                  </VBox>
-               </center>
-            </BorderPane>
-            <BorderPane prefHeight="363.0" prefWidth="280.0">
-               <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #2D3447;" BorderPane.alignment="CENTER" />
-               </center>
-               <right>
-                  <ScrollBar orientation="VERTICAL" stylesheets="@style.css" BorderPane.alignment="CENTER" />
-               </right>
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-            </BorderPane>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <padding>
-            <Insets bottom="5.0" left="10.0" top="5.0" />
-         </padding>
-      </VBox>
-   </right>
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
-         <right>
-            <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
-         </right>
-         <padding>
-            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-         </padding>
-         <center>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-              <tabs>
-                <Tab text="Untitled Tab 1">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="511.0" prefWidth="420.0">
-                                 <center>
-                                    <TreeView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                                 </center>
-                              </BorderPane>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Untitled Tab 2">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
-                           <children>
-                              <Label layoutX="156.0" layoutY="29.0" text="Log In" textFill="#2196f3">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                                 <effect>
-                                    <Glow level="1.0" />
-                                 </effect>
-                              </Label>
-                              <JFXTextField focusColor="#10212e" layoutX="156.0" layoutY="97.0" promptText="Username" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                              <JFXTextField layoutX="156.0" layoutY="135.0" promptText="Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                              <JFXButton layoutX="239.0" layoutY="184.0" style="-fx-background-color: #2196f3;" text="Log In" textFill="WHITE" />
-                              <Separator layoutX="90.0" layoutY="227.0" prefHeight="17.0" prefWidth="273.0">
-                                 <effect>
-                                    <BoxBlur height="0.0" width="178.04" />
-                                 </effect>
-                              </Separator>
-                              <Label layoutX="153.0" layoutY="248.0" text="Sign In" textFill="#2196f3">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                                 <effect>
-                                    <Glow level="1.0" />
-                                 </effect>
-                              </Label>
-                              <JFXTextField focusColor="#2196f3" layoutX="156.0" layoutY="316.0" promptText="Username" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                              <JFXTextField layoutX="156.0" layoutY="354.0" promptText="Mail" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                              <JFXButton layoutX="243.0" layoutY="474.0" style="-fx-background-color: #2196f3;" text="Sign In" textFill="WHITE" />
-                              <JFXTextField focusColor="#2196f3" layoutX="156.0" layoutY="389.0" promptText="Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                              <JFXTextField layoutX="156.0" layoutY="427.0" promptText="Confirm Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab text="Untitled Tab 3">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
-                           <children>
-                              <Label layoutX="90.0" layoutY="42.0" text="Upload" textFill="#2196f3">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                                 <effect>
-                                    <Glow level="1.0" />
-                                 </effect>
-                              </Label>
-                              <JFXTextField focusColor="#10212e" layoutX="90.0" layoutY="94.0" prefHeight="25.0" prefWidth="270.0" promptText="Script Name" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-                              <JFXButton layoutX="305.0" layoutY="256.0" style="-fx-background-color: #2196f3;" text="Upload" textFill="WHITE" />
-                              <JFXButton layoutX="359.0" layoutY="17.0" style="-fx-background-color: #16182C;" text="Disconnect" textFill="WHITE" />
-                              <JFXTextArea focusColor="#10212e" layoutX="90.0" layoutY="143.0" prefHeight="93.0" prefWidth="268.0" promptText="Script Description" style="-fx-background-color: white;" unFocusColor="#a0a2ab" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
-         </center>
-      </BorderPane>
-   </center>
-</BorderPane>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
