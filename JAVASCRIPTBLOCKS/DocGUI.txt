@@ -121,24 +121,6 @@
 ||    -- RETURN : 
 ||
 ||    ---------METHOD----------
-||         setKey(String key)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Setter for the key parameter
-||    -- ARGUMENTS : 1: String key, the new key for the object
-||    -- RETURN : 
-||
-||    ---------METHOD----------
-||         setDescription(String Description)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Setter for the Description parameter
-||    -- ARGUMENTS : 1: String Description, the new Description for the object
-||    -- RETURN : 
-||
-||    ---------METHOD----------
 ||         getDescription()
 ||    -------------------------
 ||    -- DATE : 05/07/18
@@ -154,6 +136,24 @@
 ||    -- REVISION : 1
 ||    -- DESCRIPTION : Setter for the ID parameter
 ||    -- ARGUMENTS : 1: int id, the new id for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         setKey(String key)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the key parameter
+||    -- ARGUMENTS : 1: String key, the new key for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
+||         setDescription(String Description)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the Description parameter
+||    -- ARGUMENTS : 1: String Description, the new Description for the object
 ||    -- RETURN : 
 ||
 ||----------CLASS----------
@@ -232,6 +232,24 @@
 ||    -- RETURN : String type, type of the object
 ||
 ||    ---------METHOD----------
+||         getDescription()
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Getter for the description parameter
+||    -- ARGUMENTS : None
+||    -- RETURN : String description, description of the object
+||
+||    ---------METHOD----------
+||         setId(int id)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Setter for the ID parameter
+||    -- ARGUMENTS : 1: int id, the new id for the object
+||    -- RETURN : 
+||
+||    ---------METHOD----------
 ||         setDescription(String Description)
 ||    -------------------------
 ||    -- DATE : 05/07/18
@@ -265,24 +283,6 @@
 ||    -- REVISION : 1
 ||    -- DESCRIPTION : Setter for the type parameter
 ||    -- ARGUMENTS : 1: String type, the new type for the object
-||    -- RETURN : 
-||
-||    ---------METHOD----------
-||         getDescription()
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Getter for the description parameter
-||    -- ARGUMENTS : None
-||    -- RETURN : String description, description of the object
-||
-||    ---------METHOD----------
-||         setId(int id)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Setter for the ID parameter
-||    -- ARGUMENTS : 1: int id, the new id for the object
 ||    -- RETURN : 
 ||
 ||----------CLASS----------
@@ -373,6 +373,11 @@
 ||    -- RETURN : List<Class<?>>
 ||
 ||----------CLASS----------
+||     GUI.ExportController
+||-------------------------
+||
+||
+||----------CLASS----------
 ||     GUI.GUI
 ||-------------------------
 ||
@@ -396,6 +401,15 @@
 ||    -- RETURN : None
 ||
 ||    ---------METHOD----------
+||         writeFieldInFile(Field[] methodArray, PrintWriter writer)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
+||    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
+||    -- RETURN : None
+||
+||    ---------METHOD----------
 ||         writeConstructorInFile(Constructor[] methodArray, PrintWriter writer)
 ||    -------------------------
 ||    -- DATE : 05/07/18
@@ -411,15 +425,6 @@
 ||    -- REVISION : 1
 ||    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
 ||    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
-||    -- RETURN : None
-||
-||    ---------METHOD----------
-||         writeFieldInFile(Field[] methodArray, PrintWriter writer)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
-||    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
 ||    -- RETURN : None
 ||
 ||----------CLASS----------
@@ -444,6 +449,24 @@
 ||    -- DESCRIPTION : Function called on the opening of the window, initialize the component, call the BDD to get the blocks
 ||    -- ARGUMENTS : None
 ||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         addAction(BlockDisplay newOne)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Initialize the handlers for the new block in the architecture
+||    -- ARGUMENTS : 1: BlockDisplay newOne, the new block added in the architecture
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         targetLabelCreation(Integer number)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Initialize a Label that will be used as a target for any movement in the architecture
+||    -- ARGUMENTS : 1: Integer number, the position of the target block
+||    -- RETURN : Label target, the label initialized with all the handlers
 ||
 ||    ---------METHOD----------
 ||         copyPaste(String newOne, int position)
@@ -471,24 +494,6 @@
 ||    -- DESCRIPTION : Initialize the BlockDisplay handlers
 ||    -- ARGUMENTS : 1: BlockDisplay source, the block on the left panel used to create the architecture
 ||    -- RETURN : None
-||
-||    ---------METHOD----------
-||         addAction(BlockDisplay newOne)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Initialize the handlers for the new block in the architecture
-||    -- ARGUMENTS : 1: BlockDisplay newOne, the new block added in the architecture
-||    -- RETURN : None
-||
-||    ---------METHOD----------
-||         targetLabelCreation(Integer number)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Initialize a Label that will be used as a target for any movement in the architecture
-||    -- ARGUMENTS : 1: Integer number, the position of the target block
-||    -- RETURN : Label target, the label initialized with all the handlers
 ||
 ||    ---------METHOD----------
 ||         reDisplay()

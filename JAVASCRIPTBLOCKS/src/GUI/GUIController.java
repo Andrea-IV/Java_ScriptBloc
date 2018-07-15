@@ -740,9 +740,6 @@ public class GUIController {
     }
 
     public void runPlugin(Plugin plugin){
-
         plugin.run();
-        plugin.close();
-
     }
 }
