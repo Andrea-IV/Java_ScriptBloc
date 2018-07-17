@@ -401,15 +401,6 @@
 ||    -- RETURN : None
 ||
 ||    ---------METHOD----------
-||         writeFieldInFile(Field[] methodArray, PrintWriter writer)
-||    -------------------------
-||    -- DATE : 05/07/18
-||    -- REVISION : 1
-||    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
-||    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
-||    -- RETURN : None
-||
-||    ---------METHOD----------
 ||         writeConstructorInFile(Constructor[] methodArray, PrintWriter writer)
 ||    -------------------------
 ||    -- DATE : 05/07/18
@@ -425,6 +416,15 @@
 ||    -- REVISION : 1
 ||    -- DESCRIPTION : Loop on all the methods to print annotation in the doc
 ||    -- ARGUMENTS : 1: Method[] methodArray, list of method to write the doc, 2: PrintWriter writer, printer to write in the doc field
+||    -- RETURN : None
+||
+||    ---------METHOD----------
+||         writeFieldInFile(Field[] methodArray, PrintWriter writer)
+||    -------------------------
+||    -- DATE : 05/07/18
+||    -- REVISION : 1
+||    -- DESCRIPTION : Loop on all the Fields to print annotation in the doc
+||    -- ARGUMENTS : 1: Field[] methodArray, list of field to write the doc, 2: PrintWriter writer, printer to write in the doc field
 ||    -- RETURN : None
 ||
 ||----------CLASS----------
