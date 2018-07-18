@@ -46,6 +46,11 @@
                   <MenuItem mnemonicParsing="false" text="About" />
                </items>
             </Menu>
+			<Menu fx:id="pluginMenu" mnemonicParsing="false" text="Plugin">
+               <items>
+                  <MenuItem fx:id="loadPlugins" mnemonicParsing="false" text="Load Plugin(s)" />
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
    </top>
