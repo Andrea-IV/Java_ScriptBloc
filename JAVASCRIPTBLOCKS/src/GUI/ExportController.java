@@ -31,7 +31,8 @@ public class ExportController {
                     "\"blocks\": " + GUIHomepageController.export_file.get("blocks").toString() +
                     "}";
             System.out.println(full_file);
-            String res = api.ApiPostResponse("block/finalscript", full_file);
+            String[][] headers = {{"Content-Type", "application/json"}};
+            String res = api.ApiPostResponse("block/finalscript", full_file, headers);
             System.out.println(res);
 
             FileChooser fileChooser = new FileChooser();

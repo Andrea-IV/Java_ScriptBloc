@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
@@ -21,8 +22,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import plugins.*;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class GUIController {
 
@@ -49,6 +56,17 @@ public class GUIController {
     @FXML
     private GridPane argBox;
 
+    @FXML
+    private Menu pluginMenu;
+
+    @FXML
+    private MenuItem loadPlugins;
+
+    public Plugin[] plugins = null;
+
+    public ArrayList<Path> filesjar = new ArrayList<Path>();
+    public ArrayList pluginsLoad = new ArrayList();
+
     private ArrayList<BlockDisplay> SourceList = new ArrayList<BlockDisplay>();
     private BlockDisplay tempBlock;
     private int cnt = 0;
@@ -64,11 +82,11 @@ public class GUIController {
             int counter = 0;
             for (int i = 0; i < jsonObj.length(); i++) {
                 source = new BlockDisplay(new Label((String)jsonObj.getJSONObject(i).get("name")),0);
-                source.blockLabel.setStyle("-fx-background-color: slateblue;-fx-background-radius: 50;");
-                source.blockLabel.setPrefWidth(100);
+                source.blockLabel.setStyle("-fx-background-color: #1A1A1A;-fx-background-radius: 50;");
+                source.blockLabel.setPrefWidth(150);
                 source.blockLabel.setAlignment(Pos.CENTER);
                 source.block = new Block((int)jsonObj.getJSONObject(i).get("id"),(String)jsonObj.getJSONObject(i).get("name"),(String)jsonObj.getJSONObject(i).get("description"),(String)jsonObj.getJSONObject(i).get("type"));
-                if(!((String)jsonObj.getJSONObject(i).get("type")).equals("simple")){
+                if(!((String)jsonObj.getJSONObject(i).get("type")).equals("SIMPLE")){
                     source.setType(1);
                 }
                 JSONArray Obj = (JSONArray)jsonObj.getJSONObject(i).get("Arguments");
@@ -81,13 +99,15 @@ public class GUIController {
                     }
                 }
                 blockLabelInit(source);
-                if(counter %2 == 0){
+                Blockpane.add(source.getBlockLabel(),0,counter);
+                counter++;
+                /*if(counter %2 == 0){
                     Blockpane.add(source.getBlockLabel(),0,counter);
                     counter++;
                 }else{
                     Blockpane.add(source.getBlockLabel(),1,counter-1);
                     counter++;
-                }
+                }*/
 
                 array_bd.add(source);
             }
@@ -95,9 +115,16 @@ public class GUIController {
             System.out.println(e);
         }
 
+        loadAutoPlugins();
+        loadPlugins.addEventHandler(javafx.event.ActionEvent.ACTION, event -> {
+            pluginMenu.getItems().remove(1, pluginMenu.getItems().size());
+            this.filesjar.clear();
+            loadAutoPlugins();
+        });
+
         Label target = targetLabelCreation(0);
-        target.setPrefHeight(575);
-        target.setPrefWidth(477);
+        target.setPrefHeight(573);
+        target.setPrefWidth(475);
         Architecture.getChildren().addAll(target);
 
         menu_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
@@ -109,7 +136,7 @@ public class GUIController {
 
     @MethodInfo(name = "refreshLabel(BlockDisplay selected, String position)", date = "05/07/18", arguments = "1: BlockDisplay selected, the block move on a target in the architecture, 2: String position, the position sent by the target", comments = "used to display the architecture when a block is added or when a script is loaded", returnValue="None" ,revision = 1)
     public void refreshLabel(BlockDisplay selected, String position){
-        int counterPadding = 1;
+        int counterPadding = 0;
         int counter_2 = 0;
         BlockDisplay endNew = null;
         ArrayList<BlockDisplay> container = new ArrayList<BlockDisplay>();
@@ -124,7 +151,8 @@ public class GUIController {
                 ResultList.add(targetLabelCreation(counter_2));
             }
             if(counter_2 == Integer.parseInt(position)) {
-                newOne.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                newOne.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                newOne.getBlockLabel().setAlignment(Pos.CENTER);
                 ResultList.add(newOne.getBlockLabel());
                 if (newOne.getType() == 1) {
                     String[] insideContainer = newOne.block.getType().split("\\|");
@@ -133,20 +161,23 @@ public class GUIController {
                     counter_2++;
                     for(String inside : insideContainer){
                         endNew = new BlockDisplay(new Label(inside),3);
-                        endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                        endNew.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                        endNew.getBlockLabel().setAlignment(Pos.CENTER);
                         container.add(endNew);
                         ResultList.add(endNew.getBlockLabel());
                         counter_2++;
                         ResultList.add(targetLabelCreation(counter_2));
                         endNew = new BlockDisplay(new Label("END"+inside),4);
-                        endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                        endNew.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                        endNew.getBlockLabel().setAlignment(Pos.CENTER);
                         container.add(endNew);
                         ResultList.add(endNew.getBlockLabel());
                         counter_2++;
                     }
                     counterPadding--;
                     endNew = new BlockDisplay(new Label("END"+selected.block.getName()),2);
-                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                    endNew.getBlockLabel().setAlignment(Pos.CENTER);
                     ResultList.add(endNew.getBlockLabel());
                 }
                 counter_2++;
@@ -155,7 +186,8 @@ public class GUIController {
             if(temp.getType() == 2 || temp.getType() == 4){
                 counterPadding--;
             }
-            temp.getBlockLabel().setStyle("-fx-label-padding: 0 "+(10 * counterPadding)+";");
+            temp.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+            temp.getBlockLabel().setAlignment(Pos.CENTER);
             if(temp.getType() == 1 || temp.getType() == 3){
                 counterPadding++;
             }
@@ -164,7 +196,8 @@ public class GUIController {
         }
 
         if(SourceList.isEmpty() || counter_2 == Integer.parseInt(position)) {
-            newOne.getBlockLabel().setStyle("-fx-label-padding: 0 "+(10 * counterPadding)+";");
+            newOne.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+            newOne.getBlockLabel().setAlignment(Pos.CENTER);
             ResultList.add(targetLabelCreation(counter_2));
             ResultList.add(newOne.getBlockLabel());
             if (newOne.getType() == 1) {
@@ -174,20 +207,23 @@ public class GUIController {
                 counter_2++;
                 for(String inside : insideContainer){
                     endNew = new BlockDisplay(new Label(inside),3);
-                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                    endNew.getBlockLabel().setAlignment(Pos.CENTER);
                     container.add(endNew);
                     ResultList.add(endNew.getBlockLabel());
                     counter_2++;
                     ResultList.add(targetLabelCreation(counter_2));
                     endNew = new BlockDisplay(new Label("END"+inside),4);
                     container.add(endNew);
-                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                    endNew.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                    endNew.getBlockLabel().setAlignment(Pos.CENTER);
                     ResultList.add(endNew.getBlockLabel());
                     counter_2++;
                 }
                 counterPadding--;
                 endNew = new BlockDisplay(new Label("END"+selected.block.getName()),2);
-                endNew.getBlockLabel().setStyle("-fx-label-padding: 0 " + (10 * counterPadding) + ";");
+                endNew.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
+                endNew.getBlockLabel().setAlignment(Pos.CENTER);
                 ResultList.add(endNew.getBlockLabel());
             }
             counter_2++;
@@ -209,7 +245,6 @@ public class GUIController {
 
         Architecture.getChildren().clear();
         Architecture.getChildren().addAll(ResultList);
-        System.out.println(Architecture.getHeight());
     }
 
     @MethodInfo(name = "targetLabelCreation(Integer number)", date = "05/07/18", arguments = "1: Integer number, the position of the target block", comments = "Initialize a Label that will be used as a target for any movement in the architecture", returnValue="Label target, the label initialized with all the handlers" ,revision = 1)
@@ -253,7 +288,7 @@ public class GUIController {
             public void handle(DragEvent event) {
                 /* mouse moved away, remove the graphical cues */
                 target.setTextFill(Color.BLACK);
-                target.setStyle("-fx-background-color: #505c7c;");
+                target.setStyle("-fx-background-color: #5e5e5e;");
                 event.consume();
             }
         });
@@ -590,7 +625,7 @@ public class GUIController {
 
     @MethodInfo(name = "reDisplay()", date = "05/07/18", arguments = "", comments = "Regenerate the architecture based on the SourceList", returnValue="None" ,revision = 1)
     public void reDisplay(){
-        int counterPadding = 1;
+        int counterPadding = 0;
         int counter_2 = 0;
 
         ArrayList<Label> ResultList = new ArrayList<Label>();
@@ -603,7 +638,7 @@ public class GUIController {
             if(temp.getType() == 2 || temp.getType() == 4){
                 counterPadding--;
             }
-            temp.getBlockLabel().setStyle("-fx-label-padding: 0 "+(10 * counterPadding)+";");
+            temp.getBlockLabel().setStyle("-fx-label-padding: 0 0 0 "+(20 * counterPadding)+";-fx-background-insets:0 0 0 "+(20 * counterPadding)+";-fx-pref-width: "+((20 * counterPadding)+150)+";-fx-background-color:  #1A1A1A; -fx-text-fill: white; -fx-background-radius: 50; -fx-text-alignment: center;");
             if(temp.getType() == 1 || temp.getType() == 3){
                 counterPadding++;
             }
@@ -710,6 +745,51 @@ public class GUIController {
 
     @FXML
     private void closeProject() {
+    }
 
+    public void loadAutoPlugins(){
+        try {
+            plugins = PluginLoader.initAsPlugin(PluginLoader.loadDirectoryC("toLoad", "config.cfg"));
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException f) {
+            f.printStackTrace();
+        } catch (ClassNotFoundException g) {
+            g.printStackTrace();
+        } catch (IOException h) {
+            h.printStackTrace();
+        }
+
+        try{
+            Stream<Path> paths = Files.walk(Paths.get("toLoad"));
+            int[] idx = { 0 };
+            //paths.forEach(file -> {
+
+            Iterable<Path> iterable = paths::iterator;
+            for(Path file : iterable){
+                if (Files.isRegularFile(file)) {
+                    Path plugPath = file.toAbsolutePath();
+                    this.filesjar.add(plugPath);
+                    MenuItem np = new MenuItem();
+                    np.setText(plugPath.getFileName().toString().substring(0, plugPath.getFileName().toString().indexOf(".")));
+                    np.setId(plugPath.getFileName().toString().substring(0, plugPath.getFileName().toString().indexOf(".")));
+                    System.out.println(np.getId());
+
+                    np.setOnAction(event -> {
+                        runPlugin(plugins[idx[0]++]);
+                    });
+                    pluginMenu.getItems().add(np);
+                }
+
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void runPlugin(Plugin plugin) {
+        plugin.run();
     }
 }

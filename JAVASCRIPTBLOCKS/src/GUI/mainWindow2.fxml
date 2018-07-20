@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane id="BaseBorderPane" maxHeight="600.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
+<BorderPane id="BaseBorderPane" maxHeight="600.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #1A1A1A;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
    <top>
       <MenuBar prefWidth="656.0" BorderPane.alignment="CENTER">
          <menus>
@@ -53,25 +53,29 @@
                   <MenuItem mnemonicParsing="false" text="About" />
                </items>
             </Menu>
+			<Menu fx:id="pluginMenu" mnemonicParsing="false" text="Plugin">
+               <items>
+                  <MenuItem fx:id="loadPlugins" mnemonicParsing="false" text="Load Plugin(s)" />
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
    </top>
    <left>
-      <FlowPane prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <FlowPane prefHeight="575.0" prefWidth="205.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="40.0" prefWidth="200.0">
                <children>
                   <JFXTextField focusColor="#a0a2ab" layoutX="33.0" layoutY="8.0" promptText="Search Bar" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
                </children>
             </AnchorPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true">
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="521.0" prefWidth="195.0" style="-fx-background-color: #2D3447;">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="514.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
+                <AnchorPane style="-fx-background-color: #5e5e5e;">
                      <children>
-                        <GridPane fx:id="Blockpane" hgap="5.0" layoutX="-1.0" layoutY="14.0" prefHeight="30.0" vgap="2.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                        <GridPane fx:id="Blockpane" alignment="CENTER" hgap="5.0" layoutX="-1.0" layoutY="14.0" prefHeight="30.0" vgap="2.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -94,7 +98,7 @@
       </FlowPane>
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <VBox prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="blockTitle" alignment="CENTER" prefWidth="300.0" text="Nom de Block" textFill="#a0a2ab">
                <font>
@@ -143,11 +147,11 @@
       </VBox>
    </right>
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="575.0" prefWidth="477.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="578.0" prefWidth="480.0" style="-fx-background-color: #1A1A1A;" BorderPane.alignment="CENTER">
          <content>
-            <AnchorPane>
+            <AnchorPane prefHeight="560.0" prefWidth="470.0">
                <children>
-                  <VBox fx:id="Architecture" minHeight="573.0" minWidth="476.0" style="-fx-background-color: #505c7c;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <VBox fx:id="Architecture" minHeight="573.0" minWidth="478.0" spacing="5.0" style="-fx-background-color: #5e5e5e;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </content>

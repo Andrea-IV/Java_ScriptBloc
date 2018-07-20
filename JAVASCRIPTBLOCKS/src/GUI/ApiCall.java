@@ -46,7 +46,7 @@ public class ApiCall {
     }
 
     @MethodInfo(name = "ApiPostResponse(String call, String urlParameters)", date = "05/07/18", arguments = "1: String call, the arguments for the API call, 2: String urlParameters, the post parameters for the Call", comments = "Api call with post arguments", returnValue="String, the JSON result" ,revision = 1)
-    public String ApiPostResponse(String call, String urlParameters) throws MalformedURLException, IOException {
+    public String ApiPostResponse(String call, String urlParameters, String[][] headers) throws MalformedURLException, IOException {
         URL obj = new URL(this.BaseUrl+call);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -54,7 +54,10 @@ public class ApiCall {
         con.setRequestMethod("POST");
 
 //        con.setRequestProperty("Content-Type", "application/x-www-form-urle/ncoded");
-        con.setRequestProperty("Content-Type", "application/json");
+        for(String[] head : headers){
+            con.setRequestProperty(head[0], head[1]);
+        }
+        //con.setRequestProperty("Content-Type", "application/json");
 
         // Send post request
         con.setDoOutput(true);

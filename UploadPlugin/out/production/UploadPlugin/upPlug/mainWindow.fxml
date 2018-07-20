@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="upPlug.UpPlug">
+	<children>
+		<TabPane fx:id="allTab" layoutX="10.0" layoutY="10.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<tabs>
+				<Tab  fx:id="tabLog"  text="Login / Signin">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
+							<children>
+								<Label layoutX="83.0" layoutY="63.0" text="Log In" textFill="#2196f3">
+									<font>
+										<Font size="28.0" />
+										</font>
+									<effect>
+										<Glow level="1.0" />
+									</effect>
+								</Label>
+								<JFXTextField fx:id="logInput" focusColor="#10212e" layoutX="83.0" layoutY="131.0" promptText="Mail" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXTextField fx:id="pwInput" layoutX="83.0" layoutY="169.0" promptText="Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXButton fx:id="logButton" layoutX="166.0" layoutY="218.0" style="-fx-background-color: #2196f3;" text="Log In" textFill="WHITE"  onAction="#logAction" />
+								<Separator layoutX="247.0" layoutY="177.0" prefHeight="17.0" prefWidth="107.0" rotate="90.0">
+									<effect>
+										<BoxBlur height="0.0" width="178.04" />
+									</effect>
+								</Separator>
+								<Label layoutX="382.0" layoutY="60.0" text="Sign In" textFill="#2196f3">
+									<font>
+										<Font size="28.0" />
+									</font>
+									<effect>
+										<Glow level="1.0" />
+									</effect>
+								</Label>
+								<JFXTextField fx:id="userSign" focusColor="#2196f3" layoutX="385.0" layoutY="128.0" promptText="Username" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXTextField fx:id="logSign" layoutX="385.0" layoutY="166.0" promptText="Mail" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXTextField fx:id="pwSign" focusColor="#2196f3" layoutX="385.0" layoutY="201.0" promptText="Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXTextField fx:id="pw2Sign" layoutX="385.0" layoutY="239.0" promptText="Confirm Password" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXButton fx:id="signButton" layoutX="472.0" layoutY="286.0" style="-fx-background-color: #2196f3;" text="Sign In" textFill="WHITE"  onAction="#signAction" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+				<Tab fx:id="tabUp" text="Upload">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
+							<children>
+								<Label layoutX="165.0" layoutY="66.0" text="Upload" textFill="#2196f3">
+									<font>
+										<Font size="28.0" />
+									</font>
+									<effect>
+										<Glow level="1.0" />
+									</effect>
+								</Label>
+								<JFXTextField fx:id="scriptName" focusColor="#10212e" layoutX="165.0" layoutY="118.0" prefHeight="25.0" prefWidth="270.0" promptText="Script Name" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
+								<JFXButton fx:id="uploadButton" layoutX="380.0" layoutY="280.0" style="-fx-background-color: #2196f3;" text="Upload" textFill="WHITE"  onAction="#uploadAction" />
+								<JFXButton fx:id="dcButton" layoutX="490.0" layoutY="14.0" prefHeight="41.0" prefWidth="96.0" style="-fx-background-color: #16182C;" text="Disconnect" textFill="WHITE"  onAction="#dcAction" />
+								<JFXTextArea fx:id="scriptDesc" focusColor="#10212e" layoutX="165.0" layoutY="167.0" prefHeight="93.0" prefWidth="268.0" promptText="Script Description" style="-fx-background-color: white;" unFocusColor="#a0a2ab" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</children>
+</AnchorPane>
