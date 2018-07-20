@@ -2,7 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #1A1A1A;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIHomepageController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="backgroundColor" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIHomepageController">
    <children>
       <Label layoutX="278.0" layoutY="14.0" prefHeight="53.0" prefWidth="252.0" text="SCRIPTBLOCKS" textFill="#2196f3">
          <font>
@@ -21,11 +20,6 @@
             <Glow level="1.0" />
          </effect>
       </Label>
-      <Label layoutX="340.0" layoutY="333.0" prefHeight="30.0" prefWidth="120.0" text="Recent Project" textFill="#2196f3">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <Label layoutX="278.0" layoutY="14.0" prefHeight="53.0" prefWidth="252.0" text="SCRIPTBLOCKS BLUR" textFill="#2196f3">
          <font>
             <Font name="Bookshelf Symbol 7" size="36.0" />
@@ -34,21 +28,36 @@
             <BoxBlur height="0.0" width="255.0" />
          </effect>
       </Label>
-      <Separator layoutX="331.0" layoutY="363.0" prefHeight="17.0" prefWidth="137.0">
-         <effect>
-            <BoxBlur height="0.0" width="182.14" />
-         </effect>
-      </Separator>
-      <VBox id="recent_projects" alignment="CENTER" layoutX="282.0" layoutY="381.0" prefHeight="53.0" prefWidth="233.0">
+      <VBox alignment="CENTER" layoutX="281.0" layoutY="305.0" onMouseClicked="#openConfiguration" prefHeight="53.0" prefWidth="233.0" styleClass="zoom_in" stylesheets="@style.css">
          <children>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="234.0" styleClass="zoom_in" text="RecentProject1.sm            21/06/98" textAlignment="CENTER" textFill="#1873b8" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="234.0" styleClass="zoom_in" text="RecentProject2.sm            21/06/98" textAlignment="CENTER" textFill="#1873b8" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="234.0" styleClass="zoom_in" text="RecentProject3.sm            21/06/98" textAlignment="CENTER" textFill="#1873b8" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="234.0" styleClass="zoom_in" text="RecentProject4.sm            21/06/98" textAlignment="CENTER" textFill="#1873b8" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="234.0" styleClass="zoom_in" text="RecentProject5.sm            21/06/98" textAlignment="CENTER" textFill="#1873b8" />
+            <ImageView fitHeight="86.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Gears.png" />
+               </image>
+            </ImageView>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="233.0" stylesheets="@style.css" text="Configuration" textFill="#2196f3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" prefHeight="20.0" prefWidth="233.0" stylesheets="@style.css" text="===NNNNNNNNNN===" textFill="#2196f3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <effect>
+                        <BoxBlur width="133.57" />
+                     </effect>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </VBox>
-      <VBox id="new_project" alignment="CENTER" layoutX="231.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#startNewProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
+      <VBox alignment="CENTER" layoutX="165.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#startNewProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
          <children>
             <ImageView fitHeight="95.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -77,7 +86,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </VBox>
-      <VBox id="load_project" alignment="CENTER" layoutX="373.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#loadProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
+      <VBox alignment="CENTER" layoutX="373.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#loadProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
          <children>
             <ImageView id="lod_" fitHeight="95.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -106,7 +115,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </VBox>
-      <VBox id="convert_project" alignment="CENTER" layoutX="530.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#convertProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
+      <VBox alignment="CENTER" layoutX="597.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#convertProject" prefHeight="115.0" prefWidth="50.0" styleClass="zoom_in" stylesheets="@style.css">
          <children>
             <ImageView fitHeight="95.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -3,6 +3,7 @@ package GUI;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONException;
@@ -20,6 +21,13 @@ public class ExportController {
     private Button unix_button;
     @FXML
     private Button windows_button;
+    @FXML
+    private AnchorPane anchorBackground;
+
+    @FXML
+    private  void initialize(){
+        anchorBackground.setStyle("-fx-background-color:"+GUI.conf.getBackgroundColor()+";");
+    }
 
     @FXML
     private void unixChoice() {
@@ -52,7 +60,7 @@ public class ExportController {
             System.out.println(res);
 
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+            fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
             fileChooser.setTitle("Save converted file");
             if(platform.equals("unix")) {
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("BASH files (*.sh)", "*.sh");

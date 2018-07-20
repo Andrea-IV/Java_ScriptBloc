@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -19,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane id="BaseBorderPane" maxHeight="600.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #1A1A1A;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
+<BorderPane id="BaseBorderPane" fx:id="wholeBackground" maxHeight="600.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
    <top>
       <MenuBar prefWidth="656.0" BorderPane.alignment="CENTER">
          <menus>
@@ -36,11 +35,6 @@
                   <MenuItem fx:id="menu_close" mnemonicParsing="false" text="Close" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
-               </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
                   <MenuItem mnemonicParsing="false" text="About" />
@@ -51,20 +45,33 @@
                   <MenuItem fx:id="loadPlugins" mnemonicParsing="false" text="Load Plugin(s)" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Settings">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#openConfigurationMenu" text="Configure" />
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
    </top>
    <left>
       <FlowPane prefHeight="575.0" prefWidth="205.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="40.0" prefWidth="200.0">
-               <children>
-                  <JFXTextField focusColor="#a0a2ab" layoutX="33.0" layoutY="8.0" promptText="Search Bar" style="-fx-prompt-text-fill: #a0a2ab;" unFocusColor="#a0a2ab" />
-               </children>
-            </AnchorPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="521.0" prefWidth="195.0" style="-fx-background-color: #2D3447;">
+            <Label fx:id="blockTitle1" alignment="CENTER" prefHeight="35.0" prefWidth="192.0" text="Block List" textFill="#a0a2ab">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Separator depthTest="ENABLE" maxWidth="-Infinity" prefHeight="17.0" prefWidth="27.0" scaleShape="false">
+               <effect>
+                  <BoxBlur height="0.0" width="181.07" />
+               </effect>
+               <FlowPane.margin>
+                  <Insets left="80.0" />
+               </FlowPane.margin>
+            </Separator>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="508.0" prefWidth="195.0" style="-fx-background-color: #2D3447;">
               <content>
-                <AnchorPane style="-fx-background-color: #5e5e5e;">
+                <AnchorPane fx:id="listBackground" prefWidth="193.0">
                      <children>
                         <GridPane fx:id="Blockpane" alignment="CENTER" hgap="5.0" layoutX="-1.0" layoutY="14.0" prefHeight="30.0" vgap="2.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                           <columnConstraints>
@@ -93,7 +100,7 @@
    <right>
       <VBox prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="blockTitle" alignment="CENTER" prefWidth="300.0" text="Nom de Block" textFill="#a0a2ab">
+            <Label fx:id="blockTitle" alignment="CENTER" prefHeight="35.0" prefWidth="281.0" text="Block Name" textFill="#a0a2ab">
                <font>
                   <Font size="24.0" />
                </font>
@@ -140,11 +147,11 @@
       </VBox>
    </right>
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="578.0" prefWidth="480.0" style="-fx-background-color: #1A1A1A;" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="575.0" prefWidth="468.0" style="-fx-background-color: #1A1A1A;" BorderPane.alignment="CENTER">
          <content>
-            <AnchorPane prefHeight="560.0" prefWidth="470.0">
+            <AnchorPane fx:id="architectureBackground" prefHeight="560.0" prefWidth="485.0">
                <children>
-                  <VBox fx:id="Architecture" minHeight="573.0" minWidth="478.0" spacing="5.0" style="-fx-background-color: #5e5e5e;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <VBox fx:id="Architecture" minHeight="573.0" minWidth="478.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </content>

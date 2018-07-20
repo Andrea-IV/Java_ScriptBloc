@@ -4,41 +4,31 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class GUIHomepageController {
 
     public static JSONObject export_file;
-    public GUIController test;
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
-    private FlowPane Blockpane;
-
-    @FXML
-    public VBox Architecture;
-
-    private BlockDisplay tempBlock;
+    public void initialize() {
+        anchorPane.setStyle("-fx-background-color:"+GUI.conf.getBackgroundColor()+";");
+    }
 
     @FXML
     private void loadProject() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+        fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
         fileChooser.setTitle("Open SM File");
         File file = fileChooser.showOpenDialog(GUI.stage);
         if(file != null) {
@@ -59,7 +49,8 @@ public class GUIHomepageController {
                 gc.setArchitecture((JSONArray) ja.get(0));
                 GUI.stage = new Stage();
                 GUI.stage.setScene(new Scene(scene));
-                GUI.stage.setTitle("untitled");
+                GUI.stage.setResizable(false);
+                GUI.stage.setTitle("Script::Blocks");
                 GUI.stage.show();
 
             } catch(JSONException e) {
@@ -74,7 +65,7 @@ public class GUIHomepageController {
     @FXML
     private void convertProject() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+        fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
         fileChooser.setTitle("Open SM File");
         File file = fileChooser.showOpenDialog(GUI.stage);
         if(file != null) {
@@ -89,6 +80,7 @@ public class GUIHomepageController {
                 Parent scene = loader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(scene));
+                stage.setResizable(false);
                 stage.setTitle("Export file");
                 stage.show();
             } catch (IOException e) {
@@ -105,6 +97,17 @@ public class GUIHomepageController {
         Parent new_scene = FXMLLoader.load(getClass().getResource("mainWindow2.fxml"));
         GUI.stage.setScene(new Scene(new_scene));
         GUI.stage.setTitle("untitled.sm");
+        GUI.stage.setResizable(false);
+        GUI.stage.show();
+    }
+
+    @FXML
+    private void openConfiguration() throws IOException {
+        GUI.stage = new Stage();
+        Parent new_scene = FXMLLoader.load(getClass().getResource("config_window.fxml"));
+        GUI.stage.setScene(new Scene(new_scene));
+        GUI.stage.setTitle("Configuration");
+        GUI.stage.setResizable(false);
         GUI.stage.show();
     }
 }

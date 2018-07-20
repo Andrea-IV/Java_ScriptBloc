@@ -1,0 +1,5 @@
+ScriptPath;C:\Users\Dell\Desktop\WorkspaceGit\Java_ScriptBloc\JAVASCRIPTBLOCKS
+PluginPath;C:\Users\Dell\Desktop\WorkspaceGit\Java_ScriptBloc\JAVASCRIPTBLOCKS
+BackgroundColor;#1A1A1A
+BlockColor;#1A1A1A
+ListColor;#5e5e5e
