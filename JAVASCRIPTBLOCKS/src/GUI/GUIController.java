@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.xml.transform.Source;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,6 +35,14 @@ public class GUIController {
 
     @FXML
     private MenuItem menu_save;
+    @FXML
+    private MenuItem menu_export_bash;
+    @FXML
+    private MenuItem menu_export_batch;
+    @FXML
+    private MenuItem menu_open;
+    @FXML
+    private MenuItem menu_close;
     @FXML
     private GridPane Blockpane;
     @FXML
@@ -97,6 +106,10 @@ public class GUIController {
         Architecture.getChildren().addAll(target);
 
         menu_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        menu_export_bash.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
+        menu_export_batch.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN));
+        menu_open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        menu_close.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
     }
 
     @MethodInfo(name = "refreshLabel(BlockDisplay selected, String position)", date = "05/07/18", arguments = "1: BlockDisplay selected, the block move on a target in the architecture, 2: String position, the position sent by the target", comments = "used to display the architecture when a block is added or when a script is loaded", returnValue="None" ,revision = 1)
@@ -391,13 +404,8 @@ public class GUIController {
     }
 
     private BlockDisplay findBlockById(int id) {
-//        (Blockpane.getChildren()).forEach((bd) -> {
-//            System.out.println(bd.getClass().getName());
-//        });
-
         for(BlockDisplay bd : array_bd) {
             if(bd.block.getId() == id) {
-//                System.out.println(bd.block.getName());
                 return bd;
             }
         }
@@ -413,7 +421,12 @@ public class GUIController {
             Iterator keys = jso.keys();
             int j = 0;
             int arg = 1;
-            int id = (int)jso.get("id");
+            int id = 0;
+            if(jso.has("id")) {
+                id = (int) jso.get("id");
+            } else {
+                continue;
+            }
             BlockDisplay bd = findBlockById(id);
 
             refreshLabel(bd, ""+cnt);
@@ -512,11 +525,7 @@ public class GUIController {
 
     @FXML
     private void saveFile() {
-        System.out.println("saveFile");
         JSONObject jo = new JSONObject();
-//        JSONObject obj = new JSONObject();
-//        JSONObject args = new JSONObject();
-
 
         try {
             jo =  buildJSON(SourceList, true);
@@ -674,5 +683,38 @@ public class GUIController {
             }
         }
         reDisplay();
+    }
+
+    @FXML
+    private void unixChoice() {
+        try {
+            GUIHomepageController.export_file = buildJSON(SourceList, true);
+            ExportController ec = new ExportController();
+            ec.getConvertedFfile("unix");
+        } catch(JSONException e) {
+            System.out.println(e);
+        }
+    }
+
+    @FXML
+    private void windowsChoice() {
+        try {
+            GUIHomepageController.export_file = buildJSON(SourceList, true);
+            ExportController ec = new ExportController();
+            ec.getConvertedFfile("windows");
+        } catch(JSONException e) {
+            System.out.println(e);
+        }
+    }
+
+    @FXML
+    private void openFile() {
+        GUIHomepageController ghc = new GUIHomepageController();
+        ghc.loadProject();
+    }
+
+    @FXML
+    private void closeProject() {
+
     }
 }

@@ -25,18 +25,9 @@ import java.util.ArrayList;
 public class GUIHomepageController {
 
     public static JSONObject export_file;
-    public GUIController test;
 
     @FXML
-    private FlowPane Blockpane;
-
-    @FXML
-    public VBox Architecture;
-
-    private BlockDisplay tempBlock;
-
-    @FXML
-    private void loadProject() {
+    public void loadProject() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
         fileChooser.setTitle("Open SM File");

@@ -14,32 +14,19 @@ import java.io.PrintWriter;
 
 public class ExportController {
 
-    private String platform;
-
-    @FXML
-    private Button unix_button;
-    @FXML
-    private Button windows_button;
-
     @FXML
     private void unixChoice() {
         System.out.println("unix");
-        this.platform = "unix";
-        getFileConverted("unix");
-//        Stage stage = (Stage) unix_button.getScene().getWindow();
-//        stage.close();
+        getConvertedFfile("unix");
     }
 
     @FXML
     private void windowsChoice() {
         System.out.println("windows");
-        this.platform = "windows";
-        getFileConverted("windows");
-//        Stage stage = (Stage) windows_button.getScene().getWindow();
-//        stage.close();
+        getConvertedFfile("windows");
     }
 
-    private void getFileConverted(String platform) {
+    public void getConvertedFfile(String platform) {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         try {
             String full_file =

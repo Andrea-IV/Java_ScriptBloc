@@ -53,6 +53,7 @@ public class ApiCall {
 
         //add request header
         con.setRequestMethod("POST");
+
 //        con.setRequestProperty("Content-Type", "application/x-www-form-urle/ncoded");
         con.setRequestProperty("Content-Type", "application/json");
 
