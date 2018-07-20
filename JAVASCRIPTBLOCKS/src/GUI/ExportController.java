@@ -1,12 +1,8 @@
 package GUI;
 
-import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
