@@ -13,16 +13,16 @@ public class ExportController {
     @FXML
     private void unixChoice() {
         System.out.println("unix");
-        getConvertedFfile("unix");
+        getConvertedFile("unix");
     }
 
     @FXML
     private void windowsChoice() {
         System.out.println("windows");
-        getConvertedFfile("windows");
+        getConvertedFile("windows");
     }
 
-    public void getConvertedFfile(String platform) {
+    public void getConvertedFile(String platform) {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         try {
             String full_file =

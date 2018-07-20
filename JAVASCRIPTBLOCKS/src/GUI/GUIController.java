@@ -685,7 +685,7 @@ public class GUIController {
         try {
             GUIHomepageController.export_file = buildJSON(SourceList, true);
             ExportController ec = new ExportController();
-            ec.getConvertedFfile("unix");
+            ec.getConvertedFile("unix");
         } catch(JSONException e) {
             System.out.println(e);
         }
@@ -696,7 +696,7 @@ public class GUIController {
         try {
             GUIHomepageController.export_file = buildJSON(SourceList, true);
             ExportController ec = new ExportController();
-            ec.getConvertedFfile("windows");
+            ec.getConvertedFile("windows");
         } catch(JSONException e) {
             System.out.println(e);
         }
