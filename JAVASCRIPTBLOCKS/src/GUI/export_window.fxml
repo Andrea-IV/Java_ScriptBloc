@@ -4,23 +4,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="anchorBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="349.0" style="-fx-background-color: #1A1A1A;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ExportController">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="28.0" prefWidth="338.0" text="Please choose the exportation platform" textFill="#2196f3">
+      <Label fx:id="labelWait" alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="28.0" prefWidth="338.0" text="Please choose the exportation platform" textFill="#2196f3">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <JFXButton layoutX="191.0" layoutY="57.0" onMouseClicked="#windowsChoice" onMousePressed="#unixChoice" prefHeight="32.0" prefWidth="116.0" style="-fx-background-color: #2D3447; -fx-background-radius: 30; -fx-border-color: #2196f3; -fx-border-radius: 30;" text="WINDOWS" textFill="#2196f3">
+      <JFXButton fx:id="windows_button" layoutX="191.0" layoutY="57.0" onMousePressed="#windowsChoice" prefHeight="32.0" prefWidth="116.0" style="-fx-background-color: #2D3447; -fx-background-radius: 30; -fx-border-color: #2196f3; -fx-border-radius: 30;" text="WINDOWS" textFill="#2196f3">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="32.0" layoutY="57.0" onMousePressed="#unixChoice" prefHeight="32.0" prefWidth="116.0" style="-fx-background-color: #2D3447; -fx-background-radius: 30; -fx-border-color: #2196f3; -fx-border-radius: 30;" text="UNIX" textFill="#2196f3">
+      <JFXButton fx:id="unix_button" layoutX="32.0" layoutY="57.0" onMousePressed="#unixChoice" prefHeight="32.0" prefWidth="116.0" style="-fx-background-color: #2D3447; -fx-background-radius: 30; -fx-border-color: #2196f3; -fx-border-radius: 30;" text="UNIX" textFill="#2196f3">
          <font>
             <Font size="14.0" />
          </font>

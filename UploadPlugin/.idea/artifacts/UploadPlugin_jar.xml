@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="UploadPlugin:jar">
+    <output-path>$PROJECT_DIR$/../Java_ScriptBloc/JAVASCRIPTBLOCKS/toLoad</output-path>
+    <root id="archive" name="UploadPlugin.jar">
+      <element id="module-output" name="UploadPlugin" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/PluginSource.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/config.cfg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/upPlug/mainWindow.fxml" />
+    </root>
+  </artifact>
+</component>

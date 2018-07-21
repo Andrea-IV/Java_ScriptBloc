@@ -25,8 +25,9 @@ public class GUIHomepageController {
         anchorPane.setStyle("-fx-background-color:"+GUI.conf.getBackgroundColor()+";");
     }
 
+
     @FXML
-    private void loadProject() {
+    public void loadProject() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
         fileChooser.setTitle("Open SM File");
@@ -78,11 +79,11 @@ public class GUIHomepageController {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("export_window.fxml"));
                 Parent scene = loader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(scene));
-                stage.setResizable(false);
-                stage.setTitle("Export file");
-                stage.show();
+                GUI.stage = new Stage();
+                GUI.stage.setScene(new Scene(scene));
+                GUI.stage.setResizable(false);
+                GUI.stage.setTitle("Export file");
+                GUI.stage.show();
             } catch (IOException e) {
                 System.out.println(e);
             } catch(JSONException e) {

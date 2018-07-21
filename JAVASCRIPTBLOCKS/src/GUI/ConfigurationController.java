@@ -34,8 +34,6 @@ public class ConfigurationController {
         backgroundColor.setText(GUI.conf.getBackgroundColor());
         scriptPath = GUI.conf.getScriptPath();
         pluginPath = GUI.conf.getPluginPath();
-        System.out.println(scriptPath);
-        System.out.println(pluginPath);
     }
 
     @FXML

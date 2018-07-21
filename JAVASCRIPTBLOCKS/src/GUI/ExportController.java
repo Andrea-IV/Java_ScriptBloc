@@ -1,22 +1,23 @@
 package GUI;
 
-import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
 
 public class ExportController {
 
     private String platform;
 
+    @FXML
+    private Label labelWait;
     @FXML
     private Button unix_button;
     @FXML
@@ -31,23 +32,15 @@ public class ExportController {
 
     @FXML
     private void unixChoice() {
-        System.out.println("unix");
-        this.platform = "unix";
-        getFileConverted("unix");
-//        Stage stage = (Stage) unix_button.getScene().getWindow();
-//        stage.close();
+        getConvertedFile("unix");
     }
 
     @FXML
     private void windowsChoice() {
-        System.out.println("windows");
-        this.platform = "windows";
-        getFileConverted("windows");
-//        Stage stage = (Stage) windows_button.getScene().getWindow();
-//        stage.close();
+        getConvertedFile("windows");
     }
 
-    private void getFileConverted(String platform) {
+    public void getConvertedFile(String platform) {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         try {
             String full_file =
@@ -56,7 +49,8 @@ public class ExportController {
                     "\"blocks\": " + GUIHomepageController.export_file.get("blocks").toString() +
                     "}";
             System.out.println(full_file);
-            String res = api.ApiPostResponse("block/finalscript", full_file);
+            String[][] headers = {{"Content-Type", "application/json"}};
+            String res = api.ApiPostResponse("block/finalscript", full_file, headers);
             System.out.println(res);
 
             FileChooser fileChooser = new FileChooser();
@@ -71,7 +65,7 @@ public class ExportController {
                 extFilter = new FileChooser.ExtensionFilter("BASH files (*.cmd)", "*.cmd");
                 fileChooser.getExtensionFilters().add(extFilter);
             }
-
+            GUI.stage.close();
             File file = fileChooser.showSaveDialog(GUI.stage);
             if(file != null) {
                 PrintWriter writer = new PrintWriter(file.toString(), "UTF-8");

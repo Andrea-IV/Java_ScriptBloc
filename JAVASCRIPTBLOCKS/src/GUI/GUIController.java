@@ -1,7 +1,6 @@
 package GUI;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +22,10 @@ import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import plugins.*;
 
 import java.awt.ScrollPane;
@@ -30,11 +33,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Stream;
-
 
 public class GUIController {
 
@@ -48,6 +48,14 @@ public class GUIController {
     private AnchorPane listBackground;
     @FXML
     private MenuItem menu_save;
+    @FXML
+    private MenuItem menu_export_bash;
+    @FXML
+    private MenuItem menu_export_batch;
+    @FXML
+    private MenuItem menu_open;
+    @FXML
+    private MenuItem menu_close;
     @FXML
     private GridPane Blockpane;
     @FXML
@@ -125,6 +133,9 @@ public class GUIController {
         Architecture.getChildren().addAll(target);
 
         menu_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        menu_export_bash.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
+        menu_export_batch.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN));
+        menu_open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
     }
 
     @MethodInfo(name = "createContentLabel(String name, int type, int counterPadding)", date = "20/07/18", arguments = "1: String name, Name of the content label that will be created, 2: int type, (2) end of a block (3) start of arguments (4) end of arguments", comments = "Initialize a block label that will be used for a condition block", returnValue="BlockDisplay, the display block initialized" ,revision = 1)
@@ -358,13 +369,8 @@ public class GUIController {
     }
 
     private BlockDisplay findBlockById(int id) {
-//        (Blockpane.getChildren()).forEach((bd) -> {
-//            System.out.println(bd.getClass().getName());
-//        });
-
         for(BlockDisplay bd : array_bd) {
             if(bd.block.getId() == id) {
-//                System.out.println(bd.block.getName());
                 return bd;
             }
         }
@@ -380,7 +386,12 @@ public class GUIController {
             Iterator keys = jso.keys();
             int j = 0;
             int arg = 1;
-            int id = (int)jso.get("id");
+            int id = 0;
+            if(jso.has("id")) {
+                id = (int) jso.get("id");
+            } else {
+                continue;
+            }
             BlockDisplay bd = findBlockById(id);
 
             refreshLabel(bd, ""+cnt);
@@ -479,11 +490,7 @@ public class GUIController {
 
     @FXML
     private void saveFile() {
-        System.out.println("saveFile");
         JSONObject jo = new JSONObject();
-//        JSONObject obj = new JSONObject();
-//        JSONObject args = new JSONObject();
-
 
         try {
             jo =  buildJSON(SourceList, true);
@@ -655,6 +662,34 @@ public class GUIController {
         GUI.stage.show();
     }
 
+    @FXML
+    private void unixChoice() {
+        try {
+            GUIHomepageController.export_file = buildJSON(SourceList, true);
+            ExportController ec = new ExportController();
+            ec.getConvertedFile("unix");
+        } catch(JSONException e) {
+            System.out.println(e);
+        }
+    }
+
+    @FXML
+    private void windowsChoice() {
+        try {
+            GUIHomepageController.export_file = buildJSON(SourceList, true);
+            ExportController ec = new ExportController();
+            ec.getConvertedFile("windows");
+        } catch(JSONException e) {
+            System.out.println(e);
+        }
+    }
+
+    @FXML
+    private void openFile() {
+        GUIHomepageController ghc = new GUIHomepageController();
+        ghc.loadProject();
+    }
+
     public void loadAutoPlugins(){
         try {
             plugins = PluginLoader.initAsPlugin(PluginLoader.loadDirectoryC("toLoad", "config.cfg"));
@@ -697,10 +732,7 @@ public class GUIController {
 
     }
 
-    public void runPlugin(Plugin plugin){
-
+    public void runPlugin(Plugin plugin) {
         plugin.run();
-        plugin.close();
-
     }
 }
