@@ -1,24 +1,42 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
 
 public class ExportController {
 
+    private String platform;
+
+    @FXML
+    private Label labelWait;
+    @FXML
+    private Button unix_button;
+    @FXML
+    private Button windows_button;
+    @FXML
+    private AnchorPane anchorBackground;
+
+    @FXML
+    private  void initialize(){
+        anchorBackground.setStyle("-fx-background-color:"+GUI.conf.getBackgroundColor()+";");
+    }
+
     @FXML
     private void unixChoice() {
-        System.out.println("unix");
         getConvertedFile("unix");
     }
 
     @FXML
     private void windowsChoice() {
-        System.out.println("windows");
         getConvertedFile("windows");
     }
 
@@ -36,7 +54,7 @@ public class ExportController {
             System.out.println(res);
 
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("C:\\Users\\ycapel\\Documents\\ESGI_cours\\S2\\projet_annuel\\Java_ScriptBloc\\JAVASCRIPTBLOCKS"));
+            fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
             fileChooser.setTitle("Save converted file");
             if(platform.equals("unix")) {
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("BASH files (*.sh)", "*.sh");
@@ -47,7 +65,7 @@ public class ExportController {
                 extFilter = new FileChooser.ExtensionFilter("BASH files (*.cmd)", "*.cmd");
                 fileChooser.getExtensionFilters().add(extFilter);
             }
-
+            GUI.stage.close();
             File file = fileChooser.showSaveDialog(GUI.stage);
             if(file != null) {
                 PrintWriter writer = new PrintWriter(file.toString(), "UTF-8");
