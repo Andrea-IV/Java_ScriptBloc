@@ -188,6 +188,7 @@ public class UpPlug extends Plugin {
         fileChooser.setInitialDirectory(new File("C:\\Users"));
         fileChooser.setTitle("Open SM File");
         File file = fileChooser.showOpenDialog(stage);
+        int idScript = 0;
 
         if(file != null) {
             ApiCall api = new ApiCall("http://127.0.0.1:8080/");
@@ -196,12 +197,14 @@ public class UpPlug extends Plugin {
                         "[{" +
                                 "\"name\": \""+ name +"\","+
                                 "\"description\": \""+ desc +"\","+
-                                "\"size\": \""+ (file.length())/1000 +"ko \","+
+                                "\"size\": "+ (file.length())/1000 +","+
                                 "\"id_user\": \""+ idUser +"\""+
                                 "}]";
                 String[][] headers = {{"Content-Type", "application/json"}, {"Authorization","Bearer "+token}};
                 try{
                     JSONArray jsonObj = new JSONArray(api.ApiPostResponse("script/add", full_file, headers));
+                    idScript = (int)jsonObj.getJSONObject(0).get("id");
+                    System.out.println(idScript);
                 }catch(JSONException e){
                     e.printStackTrace();
                 }
@@ -213,8 +216,10 @@ public class UpPlug extends Plugin {
             client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             HttpPost post = new HttpPost("http://127.0.0.1/WEN_ANNUEL/WebScriptBlock/upFromJava.php");
 
+            File file2 = new File(name+"_"+idScript+".sm");
             MultipartEntity entity = new MultipartEntity();
             entity.addPart("userfile", new FileBody(file));
+            entity.addPart("userfile2", new FileBody(file2));
 
             post.setEntity(entity);
 

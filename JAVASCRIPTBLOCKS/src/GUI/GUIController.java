@@ -690,6 +690,7 @@ public class GUIController {
         ghc.loadProject();
     }
 
+    @MethodInfo(name = "loadAutoPlugins()", date = "13/07/18", arguments = "None", comments = "Load automatically the jar plugins from the toLoad folder", returnValue="None" ,revision = 1)
     public void loadAutoPlugins(){
         try {
             plugins = PluginLoader.initAsPlugin(PluginLoader.loadDirectoryC("toLoad", "config.cfg"));
@@ -732,6 +733,7 @@ public class GUIController {
 
     }
 
+    @MethodInfo(name = "runPlugin()", date = "13/07/18", arguments = "None", comments = "Runs the selected plugin from its run method", returnValue="None" ,revision = 1)
     public void runPlugin(Plugin plugin) {
         plugin.run();
     }
