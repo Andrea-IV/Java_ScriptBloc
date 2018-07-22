@@ -20,7 +20,7 @@ public class Block {
     }
 
     @MethodInfo(name = "Block(int id, String name, String description, String type, ArrayList<Arguments> args)", date = "05/07/18", arguments = "1: int id, id of the block, 2: String name, name of the block, 3: String description, information about the purpose of the block, 4: String type, type of the block, 5: ArrayList<Arguments> args, The array list of arguments that are used by the block", comments = "The complete constructor", returnValue="" ,revision = 1)
-    public Block(int id, String name, String description, String type, ArrayList<Arguments> args) {
+    public Block(int id, String name, String description, String type, ArrayList<Arguments> args, ArrayList<Option> option) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -35,8 +35,13 @@ public class Block {
         this.description = another.getDescription();
         this.args = new ArrayList<Arguments>();
         Arguments newOne;
+        ArrayList<Option> newOpt;
         for(Arguments argObj: another.getArgs()){
-             newOne = new Arguments(argObj.getId(), argObj.getName(), argObj.getKey(), argObj.getDescription());
+            newOpt = new ArrayList<Option>();
+            for(Option argOpt : argObj.option){
+                newOpt.add(new Option(argOpt.getId(),argOpt.getId_argument(), argOpt.getId_block(), argOpt.getUnix(), argOpt.getWindows(), argOpt.getName(), argOpt.getInput()));
+            }
+             newOne = new Arguments(argObj.getId(), argObj.getName(), argObj.getKey(), argObj.getDescription(), newOpt);
              this.args.add(newOne);
         }
         this.type = another.getType();

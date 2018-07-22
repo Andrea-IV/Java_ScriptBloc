@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -87,9 +88,12 @@ public class GUIController {
         Architecture.setStyle("-fx-background-color:"+GUI.conf.getListColor()+";");
         architectureBackground.setStyle("-fx-background-color:"+GUI.conf.getListColor()+";");
         listBackground.setStyle("-fx-background-color:"+GUI.conf.getListColor()+";");
+
         array_bd = new ArrayList<BlockDisplay>();
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         BlockDisplay source;
+        JSONArray optObj;
+
         try{
             JSONArray jsonObj = new JSONArray(api.ApiGetResponse("block/full?instructions=0"));
             int counter = 0;
@@ -109,6 +113,12 @@ public class GUIController {
                         String temp = (String)Obj.getJSONObject(j).get("keyValue");
                         String key = temp.substring(1, temp.length() - 1);
                         source.block.args.add(new Arguments((int)Obj.getJSONObject(j).get("id"), (String)Obj.getJSONObject(j).get("name"), key, (String)Obj.getJSONObject(j).get("description")));
+                        optObj = new JSONArray(api.ApiGetResponse("options/?id_block="+source.block.getId()+"&id_argument="+Obj.getJSONObject(j).get("id")));
+                        if(optObj.length() != 0){
+                            for(int k = 0; k < optObj.length(); k++){
+                                source.block.args.get(j).option.add(new Option((int)optObj.getJSONObject(k).get("id"), (int)optObj.getJSONObject(k).get("id_argument"), (int)optObj.getJSONObject(k).get("id_block"), optObj.getJSONObject(k).get("unix").toString(), optObj.getJSONObject(k).get("windows").toString(), (String)optObj.getJSONObject(k).get("name"), (1 == (int)optObj.getJSONObject(k).get("input")) ? true : false ));
+                            }
+                        }
                     }
                 }
                 blockLabelInit(source);
@@ -314,6 +324,8 @@ public class GUIController {
                 blockTitle.setText(newOne.block.getName());
                 Label tempLabel;
                 TextField tempField;
+                TextArea tempArea;
+                CheckBox tempCheck;
                 Tooltip tooltip;
                 RowConstraints rc;
                 argBox.getChildren().clear();
@@ -323,24 +335,63 @@ public class GUIController {
 
                     tempLabel = new Label(argsObj.getName());
                     tooltip = new Tooltip();
-                    tempField = new TextField();
                     tooltip.setText(argsObj.getDescription());
                     tempLabel.setTooltip(tooltip);
                     tempLabel.setTextFill(Color.web("#a0a2ab"));
-
-                    tempField.setText(argsObj.getValue());
-                    tempField.textProperty().addListener((observable, oldValue, newValue) -> {
-                        argsObj.setValue(newValue);
-                    });
-
-                    argBox.add(tempLabel, 0,counter);
-                    argBox.add(tempField, 1, counter);
-                    rc = new RowConstraints();
-                    rc.setMinHeight(40);
-                    rc.setPrefHeight(40);
-                    rc.setMaxHeight(40);
-                    argBox.getRowConstraints().add(rc);
+                    tempLabel.setPrefWidth(280);
+                    argBox.add(tempLabel, 0, counter);
                     counter++;
+                    System.out.println(argsObj.getKey());
+                    if(argsObj.getKey().equals("#custom")){
+                        tempArea = new TextArea();
+                        tempArea.setPrefWidth(280);
+                        tempArea.setPrefHeight(300);
+                        tempArea.setText(argsObj.getValue());
+                        tempArea.textProperty().addListener((observable, oldValue, newValue) -> {
+                            argsObj.setValue(newValue);
+                        });
+                        argBox.add(tempArea, 0, counter);
+                    }else{
+                        tempField = new TextField();
+                        tempField.setText(argsObj.getValue());
+                        tempField.textProperty().addListener((observable, oldValue, newValue) -> {
+                            argsObj.setValue(newValue);
+                        });
+                        tempField.setPrefWidth(280);
+                        argBox.add(tempField, 0, counter);
+                    }
+
+
+
+
+
+                    counter++;
+                    for(Option argOpt : argsObj.option){
+                        tempLabel = new Label(argOpt.getName());
+                        tempLabel.setTextFill(Color.web("#a0a2ab"));
+                        tempLabel.setPrefWidth(280);
+                        argBox.add(tempLabel, 0,counter);
+                        counter++;
+                        if(argOpt.getInput()){
+                            tempField = new TextField();
+                            tempField.setText(argsObj.getValue());
+                            tempField.setPrefWidth(280);
+                            tempField.textProperty().addListener((observable, oldValue, newValue) -> {
+                                argOpt.setValue(newValue);
+                            });
+                            argBox.add(tempField, 0,counter);
+                            counter++;
+                        }else{
+                            tempCheck = new CheckBox();
+                            tempCheck.setSelected(argOpt.getActivated());
+                            tempCheck.setPrefWidth(280);
+                            tempCheck.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+                                argOpt.setActivated(newValue);
+                            });
+                            argBox.add(tempCheck, 0,counter);
+                            counter++;
+                        }
+                    }
                 }
             }
         });
@@ -429,10 +480,11 @@ public class GUIController {
     }
 
     private JSONObject buildJSON(ArrayList<BlockDisplay> bdl, boolean isRoot) throws JSONException {
-        System.out.println("BuilJSON");
         JSONObject jo = new JSONObject();
         JSONObject obj = new JSONObject();
         JSONObject args;
+        String temp = "";
+        String temp2 = "";
 
         for(int x = 0; x < bdl.size(); x++) {
             obj = new JSONObject();
@@ -441,7 +493,29 @@ public class GUIController {
             if(bdl.get(x).getType() == 0 || bdl.get(x).getType() == 1) {
                 obj.put("id", bdl.get(x).block.getId());
                 for(int y = 0; y < bdl.get(x).block.args.size(); y++) {
-                    args.put(bdl.get(x).block.args.get(y).getKey(), bdl.get(x).block.args.get(y).getValue());
+                    if(bdl.get(x).block.args.get(y).getKey().equals("#O")){
+                        temp="";
+                        temp2="";
+                        for(Option argOpt : bdl.get(x).block.args.get(y).option) {
+                            if(argOpt.getInput()){
+                                if(!argOpt.getValue().equals("")){
+                                    temp+= argOpt.getUnix()+" "+argOpt.getValue()+" ";
+                                    temp2+= argOpt.getWindows()+" "+argOpt.getValue()+" ";
+                                }
+                            }else{
+                                if(argOpt.getActivated()){
+                                    temp+= argOpt.getUnix()+" ";
+                                    temp2+= argOpt.getWindows()+" ";
+                                }
+                            }
+                            temp+= argOpt.getUnix()+" "+argOpt.getValue();
+                        }
+                        temp+= bdl.get(x).block.args.get(y).getValue();
+                        args.put(bdl.get(x).block.args.get(y).getKey()+"#Unix", temp);
+                        args.put(bdl.get(x).block.args.get(y).getKey()+"#Windows", temp2);
+                    }else{
+                        args.put(bdl.get(x).block.args.get(y).getKey(), bdl.get(x).block.args.get(y).getValue());
+                    }
                 }
             }
 
@@ -494,7 +568,6 @@ public class GUIController {
 
         try {
             jo =  buildJSON(SourceList, true);
-            System.out.println(jo);
         } catch(JSONException e) {
             System.out.println("erreur builder " + e);
         }

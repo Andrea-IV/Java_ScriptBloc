@@ -1,11 +1,14 @@
 package GUI;
 
+import java.util.ArrayList;
+
 public class Arguments implements Cloneable{
     private int id;
     private String name;
     private String value;
     private String key;
     private String description;
+    public ArrayList<Option> option;
 
     @MethodInfo(name = "Arguments(int id, String name, String key, String description)", date = "05/07/18", arguments = "1: int id, id of the block, 2: String name, name of the block, 3: String key, key of the block , 4: String description, information about the purpose of the block", comments = "The basic constructor without value initialisation", returnValue="" ,revision = 1)
     public Arguments(int id, String name, String key, String description) {
@@ -14,15 +17,25 @@ public class Arguments implements Cloneable{
         this.key = key;
         this.description = description;
         this.value = "";
+        this.option = new ArrayList<Option>();
     }
 
     @MethodInfo(name = "Arguments(int id, String name, String key, String description, String Value)", date = "05/07/18", arguments = "1: int id, id of the block, 2: String name, name of the block, 3: String key, key of the block , 4: String description, information about the purpose of the block, 5: String Value, value put in the argument", comments = "The complete constructor", returnValue="" ,revision = 1)
-    public Arguments(int id, String name, String key, String description, String Value) {
+    public Arguments(int id, String name, String key, String description, String Value, ArrayList<Option> option) {
         this.id = id;
         this.name = name;
         this.key = key;
         this.description = description;
         this.value = value;
+        this.option = option;
+    }
+
+    public Arguments(int id, String name, String key, String description, ArrayList<Option> option) {
+        this.id = id;
+        this.name = name;
+        this.key = key;
+        this.description = description;
+        this.option = option;
     }
 
     @MethodInfo(name = "getId()", date = "05/07/18", arguments = "None", comments = "Getter for the ID parameter", returnValue="int id, id of the object" ,revision = 1)
@@ -73,6 +86,14 @@ public class Arguments implements Cloneable{
     @MethodInfo(name = "setDescription(String Description)", date = "05/07/18", arguments = "1: String Description, the new Description for the object", comments = "Setter for the Description parameter", returnValue="" ,revision = 1)
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ArrayList<Option> getOption() {
+        return option;
+    }
+
+    public void setOption(ArrayList<Option> option) {
+        this.option = option;
     }
 
     @MethodInfo(name = "Object clone()", date = "05/07/18", arguments = "None", comments = "Permit the clone of the args when a block is copied", returnValue="Object, the Clone" ,revision = 1)
