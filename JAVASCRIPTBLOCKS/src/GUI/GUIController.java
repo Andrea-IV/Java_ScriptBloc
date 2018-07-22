@@ -314,6 +314,7 @@ public class GUIController {
                 blockTitle.setText(newOne.block.getName());
                 Label tempLabel;
                 TextField tempField;
+                TextArea tempArea;
                 Tooltip tooltip;
                 RowConstraints rc;
                 argBox.getChildren().clear();
@@ -323,23 +324,32 @@ public class GUIController {
 
                     tempLabel = new Label(argsObj.getName());
                     tooltip = new Tooltip();
-                    tempField = new TextField();
+
                     tooltip.setText(argsObj.getDescription());
                     tempLabel.setTooltip(tooltip);
                     tempLabel.setTextFill(Color.web("#a0a2ab"));
-
-                    tempField.setText(argsObj.getValue());
-                    tempField.textProperty().addListener((observable, oldValue, newValue) -> {
-                        argsObj.setValue(newValue);
-                    });
-
+                    tempLabel.setPrefWidth(280);
                     argBox.add(tempLabel, 0,counter);
-                    argBox.add(tempField, 1, counter);
-                    rc = new RowConstraints();
-                    rc.setMinHeight(40);
-                    rc.setPrefHeight(40);
-                    rc.setMaxHeight(40);
-                    argBox.getRowConstraints().add(rc);
+                    counter++;
+
+                    if(argsObj.getKey().equals("#custom")){
+                        tempArea = new TextArea();
+                        tempArea.setPrefWidth(280);
+                        tempLabel.setPrefHeight(280);
+                        tempArea.setText(argsObj.getValue());
+                        tempArea.textProperty().addListener((observable, oldValue, newValue) -> {
+                            argsObj.setValue(newValue);
+                        });
+                        argBox.add(tempArea, 0, counter);
+                    }else{
+                        tempField = new TextField();
+                        tempField.setPrefWidth(280);
+                        tempField.setText(argsObj.getValue());
+                        tempField.textProperty().addListener((observable, oldValue, newValue) -> {
+                            argsObj.setValue(newValue);
+                        });
+                        argBox.add(tempField, 0, counter);
+                    }
                     counter++;
                 }
             }
