@@ -197,8 +197,7 @@ public class UpPlug extends Plugin {
                         "[{" +
                                 "\"name\": \""+ name +"\","+
                                 "\"description\": \""+ desc +"\","+
-                                "\"size\": "+ (file.length())/1000 +","+
-                                "\"id_user\": \""+ idUser +"\""+
+                                "\"size\": "+ (file.length())/1000 +
                                 "}]";
                 String[][] headers = {{"Content-Type", "application/json"}, {"Authorization","Bearer "+token}};
                 try{
