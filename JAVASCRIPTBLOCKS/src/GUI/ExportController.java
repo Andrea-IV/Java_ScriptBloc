@@ -1,8 +1,6 @@
 package GUI;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import org.json.JSONException;
@@ -10,18 +8,9 @@ import org.json.JSONException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
 
 public class ExportController {
 
-    private String platform;
-
-    @FXML
-    private Label labelWait;
-    @FXML
-    private Button unix_button;
-    @FXML
-    private Button windows_button;
     @FXML
     private AnchorPane anchorBackground;
 

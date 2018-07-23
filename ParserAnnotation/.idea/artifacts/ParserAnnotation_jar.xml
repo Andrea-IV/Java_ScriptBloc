@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ParserAnnotation:jar">
+    <output-path>$PROJECT_DIR$/../JAVASCRIPTBLOCKS/out/artifacts/JavaScriptBlocks_jar</output-path>
+    <root id="archive" name="ParserAnnotation.jar">
+      <element id="module-output" name="ParserAnnotation" />
+    </root>
+  </artifact>
+</component>

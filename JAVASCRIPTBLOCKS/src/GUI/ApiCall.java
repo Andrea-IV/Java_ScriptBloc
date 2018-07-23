@@ -1,5 +1,7 @@
 package GUI;
 
+import AnoParser.MethodInfo;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -14,7 +16,7 @@ public class ApiCall {
     }
 
     @MethodInfo(name = "ApiGetResponse(String call)", date = "05/07/18", arguments = "1: String call, the arguments for the API call", comments = "Api call with get arguments", returnValue="String, the JSON result" ,revision = 1)
-    public String ApiGetResponse(String call) throws MalformedURLException, IOException {
+    public String ApiGetResponse(String call) throws IOException {
 
         URL obj = new URL(this.BaseUrl+call);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -40,8 +42,6 @@ public class ApiCall {
         }
         in.close();
 
-        //print result
-        System.out.println(response.toString());
         return response.toString();
     }
 
@@ -53,11 +53,9 @@ public class ApiCall {
         //add request header
         con.setRequestMethod("POST");
 
-//        con.setRequestProperty("Content-Type", "application/x-www-form-urle/ncoded");
         for(String[] head : headers){
             con.setRequestProperty(head[0], head[1]);
         }
-        //con.setRequestProperty("Content-Type", "application/json");
 
         // Send post request
         con.setDoOutput(true);
@@ -67,9 +65,6 @@ public class ApiCall {
         wr.close();
 
         int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + this.BaseUrl + call);
-        System.out.println("Post parameters : " + urlParameters);
-        System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;

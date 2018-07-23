@@ -1,5 +1,7 @@
 package GUI;
 
+import AnoParser.MethodInfo;
+
 public class Configuration {
     private String scriptPath;
     private String pluginPath;

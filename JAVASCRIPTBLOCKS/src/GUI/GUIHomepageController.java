@@ -34,14 +34,11 @@ public class GUIHomepageController {
         File file = fileChooser.showOpenDialog(GUI.stage);
         if(file != null) {
             try {
-                System.out.println(file.toString());
                 String fl = new String(Files.readAllBytes(file.toPath()));
-                System.out.println(fl);
 
                 JSONObject jsonObject = new JSONObject(fl);
                 String[] names = jsonObject.getNames(jsonObject);
                 JSONArray ja  = jsonObject.toJSONArray(new JSONArray(names));
-//                System.out.println(ja.toString());
 
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("mainWindow2.fxml"));
@@ -60,7 +57,6 @@ public class GUIHomepageController {
                 System.out.println(e);
             }
         }
-//        startNewProject();
     }
 
     @FXML

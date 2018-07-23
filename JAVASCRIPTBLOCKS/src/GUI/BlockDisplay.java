@@ -1,5 +1,6 @@
 package GUI;
 
+import AnoParser.MethodInfo;
 import javafx.scene.control.Label;
 
 public class BlockDisplay {

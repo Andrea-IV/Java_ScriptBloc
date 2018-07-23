@@ -1,5 +1,7 @@
 package GUI;
 
+import AnoParser.MethodInfo;
+
 import java.util.ArrayList;
 
 public class Block {

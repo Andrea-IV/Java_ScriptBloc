@@ -1,5 +1,6 @@
 package GUI;
 
+import AnoParser.MethodInfo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,7 +29,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import plugins.*;
 
-import java.awt.ScrollPane;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,8 +54,6 @@ public class GUIController {
     private MenuItem menu_export_batch;
     @FXML
     private MenuItem menu_open;
-    @FXML
-    private MenuItem menu_close;
     @FXML
     private GridPane Blockpane;
     @FXML
@@ -191,7 +189,6 @@ public class GUIController {
         target.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
-                //System.out.println("onDragOver");
 
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
@@ -208,7 +205,6 @@ public class GUIController {
         target.setOnDragEntered(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* the drag-and-drop gesture entered the target */
-                //System.out.println("onDragEntered");
                 /* show to the user that it is an actual gesture target */
                 if (event.getGestureSource() != target &&
                         event.getDragboard().hasString()) {
@@ -231,7 +227,6 @@ public class GUIController {
         target.setOnDragDropped(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* data dropped */
-                //System.out.println("onDragDropped");
                 /* if there is a string data on dragboard, read it and use it */
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -257,7 +252,6 @@ public class GUIController {
         source.getBlockLabel().setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
-                //System.out.println("onDragDetected");
                 tempBlock = new BlockDisplay(source);
                 /* allow any transfer mode */
                 Dragboard db = source.getBlockLabel().startDragAndDrop(TransferMode.ANY);
@@ -274,7 +268,6 @@ public class GUIController {
         source.getBlockLabel().setOnDragDone(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 /* the drag-and-drop gesture ended */
-                //System.out.println("onDragDone");
                 /* if the data was successfully moved, clear it */
                     /*if (event.getTransferMode() == TransferMode.MOVE) {
                         source.setText("");
@@ -293,7 +286,6 @@ public class GUIController {
                 Dragboard db = newOne.getBlockLabel().startDragAndDrop(TransferMode.ANY);
 
                 ClipboardContent content = new ClipboardContent();
-                System.out.println(System.identityHashCode(newOne));
                 content.putString("#COPY&PASTE#|"+System.identityHashCode(newOne) );
                 db.setContent(content);
 
@@ -439,7 +431,6 @@ public class GUIController {
     }
 
     private JSONObject buildJSON(ArrayList<BlockDisplay> bdl, boolean isRoot) throws JSONException {
-        System.out.println("BuilJSON");
         JSONObject jo = new JSONObject();
         JSONObject obj = new JSONObject();
         JSONObject args;
@@ -476,10 +467,6 @@ public class GUIController {
                             sl.add(bdl.get(x));
                             x++;
                         }
-
-                        for(int a = 0; a < sl.size(); a++) {
-                            System.out.println("a = " + sl.get(a).blockLabel);
-                        }
                         if(!sl.isEmpty()) args.append("#blocks" + block_counter, buildJSON(sl, false));
                         else args.append("#blocks" + block_counter, new JSONObject().put("null",  ""));
                         block_counter++;
@@ -504,7 +491,6 @@ public class GUIController {
 
         try {
             jo =  buildJSON(SourceList, true);
-            System.out.println(jo);
         } catch(JSONException e) {
             System.out.println("erreur builder " + e);
         }
@@ -607,12 +593,9 @@ public class GUIController {
         for(int i = 0; i < SourceList.size() ;i++){
             if(newOne == System.identityHashCode(SourceList.get(i))){
                 start = i;
-                System.out.println(SourceList.get(i).getBlockLabel().getText());
                 if(SourceList.get(i).getType() == 1){
                     counter_1=1;
                     while(true){
-                        System.out.println("-- I ");
-                        System.out.println(i);
                         i++;
                         if(SourceList.size() == i){
                             break;
@@ -727,7 +710,6 @@ public class GUIController {
                     MenuItem np = new MenuItem();
                     np.setText(plugPath.getFileName().toString().substring(0, plugPath.getFileName().toString().indexOf(".")));
                     np.setId(plugPath.getFileName().toString().substring(0, plugPath.getFileName().toString().indexOf(".")));
-                    System.out.println(np.getId());
 
                     np.setOnAction(event -> {
                         runPlugin(plugins[idx[0]++]);

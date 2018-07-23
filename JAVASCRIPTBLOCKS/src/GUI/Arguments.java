@@ -1,5 +1,7 @@
 package GUI;
 
+import AnoParser.MethodInfo;
+
 public class Arguments implements Cloneable{
     private int id;
     private String name;
