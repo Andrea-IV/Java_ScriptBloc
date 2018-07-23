@@ -27,6 +27,7 @@ public class GUIHomepageController {
 
 
     @FXML
+    @MethodInfo(name = "loadProject()", date = "05/07/18", arguments = "None", comments = "Function called to load the project", returnValue="None" ,revision = 1)
     public void loadProject() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
@@ -64,7 +65,8 @@ public class GUIHomepageController {
     }
 
     @FXML
-    private void convertProject() {
+    @MethodInfo(name = "convertProject()", date = "05/07/18", arguments = "None", comments = "Function called to convert a project", returnValue="None" ,revision = 1)
+    public void convertProject() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
         fileChooser.setTitle("Open SM File");
@@ -93,7 +95,8 @@ public class GUIHomepageController {
     }
 
     @FXML
-    private void startNewProject() throws IOException {
+    @MethodInfo(name = "startNewProject()", date = "05/07/18", arguments = "None", comments = "Will load an empty project and launch the main window", returnValue="None" ,revision = 1)
+    public void startNewProject() throws IOException {
         GUI.stage = new Stage();
         Parent new_scene = FXMLLoader.load(getClass().getResource("mainWindow2.fxml"));
         GUI.stage.setScene(new Scene(new_scene));
@@ -103,7 +106,8 @@ public class GUIHomepageController {
     }
 
     @FXML
-    private void openConfiguration() throws IOException {
+    @MethodInfo(name = "openConfiguration()", date = "05/07/18", arguments = "None", comments = "Function called to launch the configuration window", returnValue="None" ,revision = 1)
+    public void openConfiguration() throws IOException {
         GUI.stage = new Stage();
         Parent new_scene = FXMLLoader.load(getClass().getResource("config_window.fxml"));
         GUI.stage.setScene(new Scene(new_scene));

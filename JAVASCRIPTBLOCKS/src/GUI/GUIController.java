@@ -378,6 +378,7 @@ public class GUIController {
         return null;
     }
 
+    @MethodInfo(name = "setArchitecture()", date = "05/07/18", arguments = "JSONArray", comments = "Will loop through the JSONArray and set the project up", returnValue="None" ,revision = 1)
     public void setArchitecture (JSONArray json) throws JSONException {
         int pos_object;
 
@@ -428,7 +429,8 @@ public class GUIController {
         }
     }
 
-    private JSONObject buildJSON(ArrayList<BlockDisplay> bdl, boolean isRoot) throws JSONException {
+    @MethodInfo(name = "buildJSON()", date = "05/07/18", arguments = "ArrayList<BlockDisplay>, boolean", comments = "Will  create a JSONObject from the Architecture", returnValue="JSONObject" ,revision = 1)
+    public JSONObject buildJSON(ArrayList<BlockDisplay> bdl, boolean isRoot) throws JSONException {
         System.out.println("BuilJSON");
         JSONObject jo = new JSONObject();
         JSONObject obj = new JSONObject();
@@ -489,7 +491,8 @@ public class GUIController {
     }
 
     @FXML
-    private void saveFile() {
+    @MethodInfo(name = "saveFile()", date = "05/07/18", arguments = "None", comments = "Write a JSONObject into a  file", returnValue="None" ,revision = 1)
+    public void saveFile() {
         JSONObject jo = new JSONObject();
 
         try {
@@ -663,7 +666,8 @@ public class GUIController {
     }
 
     @FXML
-    private void unixChoice() {
+    @MethodInfo(name = "unixChoice()", date = "05/07/18", arguments = "None", comments = "Will call getConvertedFile from ExportController with argument 'unix' ", returnValue="None" ,revision = 1)
+    public void unixChoice() {
         try {
             GUIHomepageController.export_file = buildJSON(SourceList, true);
             ExportController ec = new ExportController();
@@ -674,7 +678,8 @@ public class GUIController {
     }
 
     @FXML
-    private void windowsChoice() {
+    @MethodInfo(name = "windowsChoice()", date = "05/07/18", arguments = "None", comments = "Will call getConvertedFile from ExportController with argument 'windows' ", returnValue="None" ,revision = 1)
+    public void windowsChoice() {
         try {
             GUIHomepageController.export_file = buildJSON(SourceList, true);
             ExportController ec = new ExportController();

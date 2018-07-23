@@ -40,6 +40,7 @@ public class ExportController {
         getConvertedFile("windows");
     }
 
+    @MethodInfo(name = "getConvertedFile()", date = "05/07/18", arguments = "String", comments = "Will call API to convert the file choosen and will save it in a new file", returnValue="None" ,revision = 1)
     public void getConvertedFile(String platform) {
         ApiCall api = new ApiCall("http://127.0.0.1:8080/");
         try {
