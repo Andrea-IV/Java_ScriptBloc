@@ -1,5 +1,6 @@
 package GUI;
 
+import AnoParser.MethodInfo;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;

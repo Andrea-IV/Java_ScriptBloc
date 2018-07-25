@@ -41,11 +41,6 @@
                   </Menu>
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
 			<Menu fx:id="pluginMenu" mnemonicParsing="false" text="Plugin">
                <items>
                   <MenuItem fx:id="loadPlugins" mnemonicParsing="false" text="Load Plugin(s)" />

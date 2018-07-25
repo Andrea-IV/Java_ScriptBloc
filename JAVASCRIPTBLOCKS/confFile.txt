@@ -1,5 +1,5 @@
-ScriptPath;C:\Users\ycapel\Documents\ESGI_cours\S2\projet_annuel\Java_ScriptBloc\JAVASCRIPTBLOCKS
-PluginPath;C:\Users\ycapel\Documents\ESGI_cours\S2\projet_annuel\Java_ScriptBloc\JAVASCRIPTBLOCKS
+ScriptPath;C:\Users\Dell\Desktop\WorkspaceGit\Java_ScriptBloc\JAVASCRIPTBLOCKS
+PluginPath;C:\Users\Dell\Desktop\WorkspaceGit\Java_ScriptBloc\JAVASCRIPTBLOCKS\toLoad
 BackgroundColor;#1A1A1A
 BlockColor;#1A1A1A
 ListColor;#5e5e5e

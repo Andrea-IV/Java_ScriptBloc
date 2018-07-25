@@ -1,5 +1,6 @@
 package GUI;
 
+import AnoParser.MethodInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,6 +30,7 @@ public class GUIHomepageController {
     @FXML
     @MethodInfo(name = "loadProject()", date = "05/07/18", arguments = "None", comments = "Function called to load the project", returnValue="None" ,revision = 1)
     public void loadProject() {
+        //es
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(GUI.conf.getScriptPath()));
         fileChooser.setTitle("Open SM File");
